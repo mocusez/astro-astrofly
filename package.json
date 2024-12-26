@@ -7,7 +7,9 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "newpage": "node cli.js newpage",
+    "sync": "node cli.js sync"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
