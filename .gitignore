@@ -27,8 +27,6 @@ pnpm-debug.log*
 
 src/content/
 
-pnpm-lock.yaml
-
 src/_scripts/
 
 *.md
