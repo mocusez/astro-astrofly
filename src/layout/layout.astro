@@ -1,0 +1,62 @@
+---
+// import { getBgPath } from '../utils'; // 假设 getBgPath 是一个导入的实用函数
+import { theme } from '../theme'; // 假设 theme 是一个导入的主题配置
+import { is_post } from '@src/utils';
+const isPost = is_post(Astro.url);
+// import { is_archive, is_category, is_tag, is_post } from '../helpers'; // 假设这些是导入的辅助函数
+import Head from './head.astro';
+import HeaderIndex from './header/index.astro';
+import Footer from './footer.astro';
+import Sidebar from './sidebar.astro';
+import LoadingIndex from './loadings/index.astro';
+import WidgetIndex from './widget/index.astro';
+import AdditionalJs from './additional-js.astro';
+import Rightside from './rightside.astro';
+interface Props {
+  lang: string;
+  page: any;
+  postHeadings?: Array<{
+    depth: number;
+    slug: string;
+    text: string;
+  }>;
+}
+const { lang,page,postHeadings } = Astro.props;
+---
+<html lang={lang} data-theme={theme.display_mode} class={theme.aside.enable && theme.aside.hide ? 'hide-aside' : ''}>
+  <Head lang={lang} page={page}/>
+  <body>
+    <LoadingIndex />
+    <!-- {partial('includes/loading/index', {}, { cache: true })} -->
+
+    <!-- {theme.background && (
+      <div id="web_bg" style={getBgPath(theme.background)}></div>
+    )} -->
+
+    <!-- {partial('includes/sidebar', {}, { cache: true })} -->
+    <Sidebar lang={lang}/>
+    <div id="body-wrap" class={isPost ? 'post' : 'page' + (page.type ? ' type-' + page.type : '')}>
+      <HeaderIndex lang={lang} page={page}/>
+
+      <main class='layout' id="content-inner" >
+        <slot />
+        <WidgetIndex lang={lang} postHeadings={postHeadings}/>
+
+        <!-- {body ? (
+          <div>{body}</div>
+        ) : (
+          <>
+            <slot name="content"></slot>
+            {theme.aside.enable && page.aside !== false && (
+              <include src="./widget/index.astro" />
+            )}
+          </>
+        )} -->
+      </main>
+
+      <Footer lang={lang}/>
+    </div>
+    <Rightside lang={lang}/>
+    <AdditionalJs />
+  </body>
+</html>

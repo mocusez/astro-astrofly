@@ -1,0 +1,41 @@
+---
+import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+import { useTranslations } from '@src/utils';
+import { getConfig } from '@src/config'; 
+const { lang } = Astro.props;
+const config = getConfig(lang);
+const t = useTranslations(lang);
+
+const currentYear = new Date().getFullYear();
+const sinceYear = theme.footer.owner.since;
+const showOwner = theme.footer.owner.enable;
+const showCopyright = theme.footer.copyright;
+const customText = theme.footer.custom_text;
+---
+<footer id="footer">
+<div id="footer-wrap">
+  {showOwner && (
+    <div class="copyright">
+      {sinceYear && sinceYear != currentYear ? (
+        <span>&copy;{sinceYear} - {currentYear} By {config.author}</span>
+      ) : (
+        <span>&copy;{currentYear} By {config.author}</span>
+      )}
+    </div>
+  )}
+
+  {showCopyright && (
+    <div class="framework-info">
+      <span>{t('footer.framework')} </span>
+      <a href="https://astro.build" rel="external nofollow noreferrer">Astro</a>
+      <span class="footer-separator">|</span>
+      <span>{t('footer.theme')} </span>
+      <a href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a>
+    </div>
+  )}
+
+  {customText && (
+    <div class="footer_custom_text" set:html={customText}/>
+  )}
+</div>
+</footer>

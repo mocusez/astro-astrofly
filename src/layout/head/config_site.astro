@@ -1,0 +1,38 @@
+---
+// import { is_post, is_page, is_home, toc, full_date } from '../utils'; // 假设这些是导入的实用函数
+// import theme from '../theme'; // 假设 theme 是一个导入的主题配置
+// import page from '../page'; // 假设 page 是一个导入的页面数据
+import { is_post, is_home } from '@src/utils';
+const isPost = is_post(Astro.url);
+const isHome = is_home(Astro.url);
+// const titleVal = page.title.replace(/'/ig, "\\'");
+
+let isHighlightShrink = 'undefined';
+// if (theme.code_blocks.shrink === 'none') {
+//   isHighlightShrink = 'undefined';
+// } else if (typeof page.highlight_shrink === 'boolean') {
+//   isHighlightShrink = page.highlight_shrink;
+// } else {
+//   isHighlightShrink = theme.code_blocks.shrink;
+// }
+
+let showToc = false;
+// if (theme.aside.enable && page.aside !== false) {
+//   let tocEnable = false;
+//   if (is_post() && theme.toc.post) tocEnable = true;
+//   else if (is_page() && theme.toc.page) tocEnable = true;
+//   const pageToc = typeof page.toc === 'boolean' ? page.toc : tocEnable;
+//   showToc = pageToc && (toc(page.content) !== '' || page.encrypt === true);
+// }
+---
+
+<script id="config-diff" define:vars={{isPost,isHome,isHighlightShrink,showToc}}>
+  var GLOBAL_CONFIG_SITE = {
+    title: 'Testing',
+    isPost: isPost,
+    isHome: isHome,
+    isHighlightShrink: isHighlightShrink,
+    isToc: showToc,
+    postUpdate: '2023-10-05T14:48:00.000Z'
+  };
+</script>

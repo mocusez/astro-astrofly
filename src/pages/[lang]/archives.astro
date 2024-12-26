@@ -1,0 +1,32 @@
+---
+import Layout from '@src/layout/layout.astro'; // 假设这是导入的布局组件
+import ArticleSort from '@src/layout/mixins/article-sort.astro'; // 假设这是导入的 ArticleSort 组件
+// import Pagination from '../includes/pagination.astro'; // 假设这是导入的分页组件
+// import { _p, getArchiveLength } from '../utils';
+import { useTranslations } from '@src/utils';
+import { getBlogEntry } from '@src/prework';
+
+export function getStaticPaths () {
+ return [
+    {params: {lang: 'en'}},
+    {params: {lang: 'zh-CN'}},
+  ];
+}
+const { lang } = Astro.params;
+const t = useTranslations(lang); 
+const posts = await getBlogEntry(lang);
+const page = {
+  "title": t('page.archives'),
+  "type": "archieves",
+  "comments": false
+}
+---
+
+<Layout lang={lang} page={page}>
+  <div id="archive">
+    <!-- <div class="article-sort-title">{`${_p('page.articles')} - ${getArchiveLength()}`}</div> -->
+    <div class="article-sort-title">{`${t('page.articles')}`}</div>
+    <ArticleSort lang={lang} posts={posts}/>
+    <!-- <Pagination /> -->
+  </div>
+</Layout>

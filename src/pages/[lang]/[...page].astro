@@ -1,0 +1,32 @@
+---
+import Layout from '@src/layout/layout.astro';
+import IndexPostUI from '@src/layout/mixins/IndexPostUI.astro';
+import { getBlogEntry } from '@src/prework';
+export async function getStaticPaths({ paginate }) {
+  const languages = ['en', 'zh-CN'];
+  const paths = [];
+  const POSTS_PER_PAGE = 10;
+
+  for (const lang of languages) {
+    const blogEntries = (await getBlogEntry(lang)).map(entry => entry.data);
+    const paginatedPaths = paginate(blogEntries, {
+      pageSize: POSTS_PER_PAGE,
+      params: { lang },
+      props: { lang },
+    });
+    paths.push(...paginatedPaths);
+  }
+  return paths;
+}
+const { lang,page } = Astro.props;
+
+const pageSetting = {
+  "title": "主页",
+  "type": "index",
+  "comments": false
+};
+---
+
+<Layout lang={lang} page={pageSetting}>
+  <IndexPostUI lang={lang} postsPagnition={page} />
+</Layout>

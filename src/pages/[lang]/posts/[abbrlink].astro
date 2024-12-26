@@ -1,0 +1,31 @@
+---
+import { getBlogEntry } from '@src/prework';
+import Layout from '@src/layout/layout.astro';
+export async function getStaticPaths() {
+  const languages = ['en', 'zh-CN']; // 添加你支持的语言
+  const paths: { params: { lang: string; abbrlink: string }; props: { entry: any; lang: string } }[] = [];
+
+  for (const lang of languages) {
+    const blogEntries = await getBlogEntry(lang);
+    paths.push(...blogEntries.map(entry => ({
+      params: { lang, abbrlink: entry.data.abbrlink },
+      props: { entry, lang },
+    })));
+  }
+
+  return paths;
+}
+const { entry, lang } = Astro.props;
+const { Content, headings } = await entry.render();
+// import  "../../source/css/_layout/post.styl";
+---
+<Layout lang={lang} page={entry.data} postHeadings={headings}>
+  <div id="post">
+    <article id="article-container" class="post-content">
+      <Content />
+    </article>
+    <div class="tag_share">
+      
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,117 @@
+---
+import { getBgPath } from '@src/utils'; // 假设这是导入的实用函数
+import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+const { lang,page } = Astro.props;
+import { getConfig } from '@src/config'; // 假设 config 是一个导入的配置
+const config = getConfig(lang);
+import { is_home, is_post, is_category, is_archive } from '@src/utils';
+import Nav from './nav.astro';
+import Social from './social.astro';
+import PostInfo from './post-info.astro';
+
+const returnTopImg = (img:string | false) => img !== false ? img || theme.default_top_img : false;
+const isFixedClass = theme.nav.fixed ? ' fixed' : '';
+let top_img:string | false = false;
+let headerClassName = 'not-top-img';
+let bg_img = '';
+let siteTitle = '';
+
+const isPost = is_post(Astro.url);
+const isHome = is_home(Astro.url);
+const isCategory = is_category(Astro.url);
+const isArchive = is_archive(Astro.url);
+
+if (!theme.disable_top_img ) {
+// if (!theme.disable_top_img && page.top_img !== false) {
+  if (isPost) {
+    top_img = page.cover || theme.default_top_img;
+    
+  // } else if (is_page()) {
+  //   top_img = page.top_img || theme.default_top_img;
+  // } else if (is_tag()) {
+  //   top_img = theme.tag_per_img && theme.tag_per_img[page.tag];
+  //   top_img = top_img || returnTopImg(theme.tag_img);
+  } else if (isCategory) {
+    top_img = theme.category_per_img && theme.category_per_img[page.category];
+    top_img = top_img || returnTopImg(theme.category_img);
+  } else if (isHome) {
+    top_img = returnTopImg(theme.index_img);
+  } else if (isArchive) {
+    top_img = returnTopImg(theme.archive_img);
+  } else {
+    top_img = theme.default_top_img;
+  }
+
+  if (top_img !== false) {
+    bg_img = getBgPath(typeof top_img === 'string' ? top_img : '');
+    headerClassName = isHome ? 'full_page' : isPost ? 'post-bg' : 'not-home-page';
+  }
+}
+
+const sub = config.subtitle.sub;
+---
+
+<header id="page-header" class={`${headerClassName}${isFixedClass}`} style={bg_img}>
+  <Nav lang={lang}/>
+  <!-- {top_img !== false ? (
+    <div id="site-info">
+      <h1 id="site-title">{config.title}</h1>
+      {theme.subtitle.enable && (
+        <>
+          <script type="module" define:vars={{ sub }}>
+            import "/node_modules/typed.js/dist/typed.umd.js";
+            new Typed("#subtitle", {
+                strings: sub,
+                startDelay: 300,
+                typeSpeed: 150,
+                loop: true,
+                backSpeed: 50,
+              });
+          </script>
+          <div id="site-subtitle">
+            <span id="subtitle"></span>
+          </div>
+        </>
+      )} -->
+      {top_img !== false ? (
+        isPost ? (
+          <PostInfo lang={lang} page={page}/>
+        ) : isHome ? (
+          <div id="site-info">
+            <h1 id="site-title">{config.title}</h1>
+            {theme.subtitle.enable && (
+              <>
+                <script type="module" define:vars={{ sub }}>
+                  import "/js/typed.umd.js";
+                  new Typed("#subtitle", {
+                      strings: sub,
+                      startDelay: 300,
+                      typeSpeed: 150,
+                      loop: true,
+                      backSpeed: 50,
+                    });
+                </script>
+                <div id="site-subtitle">
+                  <span id="subtitle"></span>
+                </div>
+              </>
+            )}
+            {(
+              <div id="site_social_icons">
+                <Social lang={lang}/>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div id="page-site-info">
+            {<h1 id="site-title">{page.title || page.tag || page.category}</h1> }
+          </div>
+        )
+      ) : (
+        !isPost && <h1 class="title-seo">{page.title || page.tag || page.category || config.title}</h1>
+      )}
+    <div id="scroll-down">
+      <i class="fas fa-angle-down scroll-down-effects"></i>
+    </div>
+
+</header>

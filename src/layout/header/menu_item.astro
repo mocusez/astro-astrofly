@@ -1,0 +1,49 @@
+---
+import { getConfig } from '@src/config'; // 假设 config 是一个导入的配置
+const { lang } = Astro.props;
+const config = getConfig(lang);
+const trim = (str:string) => str.trim();
+const menuItems = config.menu || {};
+---
+{Object.keys(menuItems).length > 0 && (
+  <div class="menus_items">
+    {Object.entries(menuItems).map(([label, value]) => {
+      if (typeof value !== 'object') {
+        const [link, icon] = String(value).split('||').map(trim);
+        return (
+          <div class="menus_item">
+            <a class="site-page" href={link}>
+              {icon && <i class={`fa-fw ${icon}`}></i>}
+              <span>{' ' + label}</span>
+            </a>
+          </div>
+        );
+      } else {
+        const [groupLabel, groupIcon, groupClass] = label.split('||').map(trim);
+        const hideClass = groupClass === 'hide' ? 'hide' : '';
+        return (
+          <div class="menus_item">
+            <span class={`site-page group ${hideClass}`}>
+              {groupIcon && <i class={`fa-fw ${groupIcon}`}></i>}
+              <span>{' ' + groupLabel}</span>
+              <i class="fas fa-chevron-down"></i>
+            </span>
+            <ul class="menus_item_child">
+              {Object.entries(value).map(([lab, val]) => {
+                const [childLink, childIcon] = val.split('||').map(trim);
+                return (
+                  <li>
+                    <a class="site-page child" href={childLink}>
+                      {childIcon && <i class={`fa-fw ${childIcon}`}></i>}
+                      <span>{' ' + lab}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        );
+      }
+    })}
+  </div>
+)}

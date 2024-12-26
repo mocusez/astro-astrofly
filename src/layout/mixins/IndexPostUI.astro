@@ -1,0 +1,106 @@
+---
+// import { url_for, _p, is_home } from '../utils'; // 假设这些是导入的实用函数
+// import { url_for, useTranslations, is_home } from '@src/utils'; // 假设这些是导入的实用函数
+import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+// const indexLayout = theme.index_layout;
+import {  useTranslations,date_xml, full_date,date  } from '@src/utils';
+import { getConfig } from '@src/config';
+import Pagination from '../pagination.astro';
+const { lang,postsPagnition } = Astro.props;
+const config = getConfig(lang);
+const t = useTranslations(lang);
+const postsMeta = postsPagnition.data;
+// console.log(postsPagnition);
+---
+<div id="recent-posts" class={`recent-posts nc`}>
+    {postsMeta.map((entry, index) => {
+      const link = `/${lang}/posts/${entry.abbrlink}`;
+      const title = entry.title;
+      const leftOrRight = (index % 2 === 0 ? 'left' : 'right');
+      const post_cover = entry.cover;
+      const no_cover = '';
+
+      return (
+        <div class="recent-post-item">
+          {post_cover && (
+            <div class={`post_cover ${leftOrRight}`}>
+              <a href={link} title={title}>
+                <img
+                    class="post-bg"
+                    src={post_cover}
+                    onerror={`this.onerror=null;this.src='${theme.error_img.post_page}'`}
+                    alt={title}
+                  />
+                {/* <div class="post-bg" style={`background: ${post_cover}`}></div> */}
+                {/* {article.cover_type === 'img' ? (
+                  <img
+                    class="post-bg"
+                    src={url_for(post_cover)}
+                    onError={`this.onerror=null;this.src='${url_for(theme.error_img.post_page)}'`}
+                    alt={title}
+                  />
+                ) : (
+                  <div class="post-bg" style={`background: ${post_cover}`}></div>
+                )} */}
+              </a>
+            </div>
+          )}
+          <div class={`recent-post-info ${no_cover}`}>
+            <a class="article-title" href={link} title={title}>
+              {/* {is_home() && (article.top || article.sticky > 0) && <i class="fas fa-thumbtack sticky"></i>} */}
+              {title}
+            </a>
+            <div class="article-meta-wrap">
+              {(
+                <span class="post-meta-date">
+                  {
+                    <>
+                      <i class="far fa-calendar-alt"></i>
+                      <span class="article-meta-label">{t('post.created')}</span>
+                      <time class="post-meta-date-created" datetime={date_xml(entry.date)} title={`${t('post.created')} ${full_date(entry.date)}`}>
+                        {date(entry.date, config.date_format)}
+                      </time>
+                      <span class="article-meta-separator"> | </span>
+                      <i class="fas fa-history"></i>
+                      <span class="article-meta-label">{t('post.updated')}</span>
+                      <time class="post-meta-date-updated" datetime={date_xml(entry.updated)} title={`${t('post.updated')} ${entry.updated}`}>
+                        {date(entry.date, config.date_format)}
+                      </time>
+                    </>
+                  }
+                </span>
+              )}
+              {(
+                <span class="article-meta">
+                  <span class="article-meta-separator"> | </span>
+                  {
+                    <span>
+                      <i class="fas fa-inbox"></i>
+                      <a href={`/${lang}/categories/${entry.categories}`} class="article-meta__categories">{entry.categories}</a>
+                      {/* {index < article.categories.data.length - 1 && <i class="fas fa-angle-right article-meta-link"></i>} */}
+                    </span>
+                  }
+                </span>
+              )}
+              {/* { (
+                <span class="article-meta">
+                  <span class="article-meta-separator"> | </span>
+                  <i class="fas fa-comments"></i>
+                  {theme.comments.use[0] === 'Waline' && (
+                    <a href={`${url_for(link)}#post-comment`}>
+                      <span class="waline-comment-count" data-path={url_for(link)}>
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                      </span>
+                    </a>
+                  )}
+                </span>
+              )} */}
+            </div>
+            <div class="content">{entry.description}</div>
+          </div>
+        
+        </div>
+      );
+    })}
+    <Pagination lang={lang} page={postsPagnition}/>
+</div>

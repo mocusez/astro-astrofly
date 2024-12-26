@@ -1,0 +1,53 @@
+---
+// const { page, theme, _p } = Astro.props;
+interface Props {
+  lang: string;
+  postHeadings?: Array<{
+    depth: number;
+    slug: string;
+    text: string;
+  }>;
+}
+const { lang,postHeadings } = Astro.props;
+import { useTranslations } from '@src/utils';
+const t = useTranslations(lang);
+import CardPostTocItems from './card_post_toc_items.astro';
+// const tocNumber = page.toc_number !== undefined ? page.toc_number : theme.toc.number;
+// const tocExpand = page.toc_expand !== undefined ? page.toc_expand : theme.toc.expand;
+// const tocExpandClass = tocExpand ? 'is-expand' : '';
+---
+
+<div id="card-toc" class="card-widget">
+  <div class="item-headline">
+    <i class="fas fa-stream"></i>
+    <span>{t('aside.card_toc')}</span>
+    <span class="toc-percentage"></span>
+  </div>
+  <CardPostTocItems postHeadings={postHeadings} />
+  <!-- <div class="toc-content">
+    <ol class="toc">
+      {
+        postHeadings && postHeadings.map((heading) => (
+          <li class={`toc-item toc-level-${heading.depth}`}>
+            <a class="toc-link" href={`#${heading.slug}`}>
+              <span class="toc-number">{heading.depth}.</span>
+              <span class="toc-text">{heading.text}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </div> -->
+  <!-- {page.encrypt ? (
+    <div 
+      class={`toc-content toc-div-class ${tocExpandClass}`} 
+      style="display:none"
+      set:html={toc(page.origin, {list_number: tocNumber})}
+    />
+  ) : (
+    <div 
+      class={`toc-content ${tocExpandClass}`}
+      set:html={toc(page.content, {list_number: tocNumber})}
+    />
+  )} -->
+</div>

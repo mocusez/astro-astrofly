@@ -22,3 +22,13 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+.vscode/
+
+src/content/
+
+update.cmd
+
+pnpm-lock.yaml
+
+src/_scripts/

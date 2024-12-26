@@ -1,0 +1,20 @@
+---
+import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+const { lang } = Astro.props;
+
+const socialIcons = Object.entries(theme.social).map(([icon, value]) => {
+  const [link, title, color] = value.split('||').map(i => i.trim());
+  const iconStyle = color ? `color: ${color.replace(/[\'\"]/g, '')};` : '';
+  const iconTitle = title || '';
+  const href = iconTitle == "RSS" ? `/${lang}${link}` :link;
+  return { icon, href, iconStyle, iconTitle };
+});
+---
+
+<div id="social-icons">
+  {socialIcons.map((icon) => (
+    <a class="social-icon" href={icon.href} target="_blank" title={icon.iconTitle}> 
+      <i class={icon.icon} style={icon.iconStyle}></i>
+    </a>
+  ))}
+</div>

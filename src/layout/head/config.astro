@@ -1,0 +1,125 @@
+---
+import { useTranslations } from '@src/utils'; // 假设这些是导入的实用函数
+import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+import { undefined } from 'astro:schema';
+const { lang,config } = Astro.props;
+const t = useTranslations(lang);
+
+let localSearch = 'undefined';
+// if (theme.search.use === 'local_search') {
+//   const { CDN, preload, top_n_per_article, unescape } = theme.search.local_search;
+//   localSearch = JSON.stringify({
+//     path: CDN || config.root + config.search.path,
+//     preload,
+//     top_n_per_article,
+//     unescape,
+//     languages: {
+//       hits_empty: _p("search.local_search.hits_empty"),
+//       hits_stats: _p("search.local_search.hits_stats"),
+//     }
+//   });
+// }
+
+let translate = 'undefined';
+// if (theme.translate && theme.translate.enable) {
+//   translate = JSON.stringify({
+//     defaultEncoding: theme.translate.defaultEncoding,
+//     translateDelay: theme.translate.translateDelay,
+//     msgToTraditionalChinese: theme.translate.msgToTraditionalChinese,
+//     msgToSimplifiedChinese: theme.translate.msgToSimplifiedChinese
+//   });
+// }
+
+let copyright = 'undefined';
+// if (theme.copy.enable && theme.copy.copyright.enable) {
+//   copyright = JSON.stringify({
+//     limitCount: theme.copy.copyright.limit_count,
+//     languages: {
+//       author: t("copy_copyright.author") + ': ' + config.author,
+//       link: t("copy_copyright.link") + ': ',
+//       source: t("copy_copyright.source") + ': ' + config.title,
+//       info: t("copy_copyright.info")
+//     }
+//   });
+// }
+
+// let Snackbar = 'undefined';
+// if (theme.snackbar && theme.snackbar.enable) {
+//   Snackbar = JSON.stringify({
+//     chs_to_cht: _p("Snackbar.chs_to_cht"),
+//     cht_to_chs: _p("Snackbar.cht_to_chs"),
+//     day_to_night: _p("Snackbar.day_to_night"),
+//     night_to_day: _p("Snackbar.night_to_day"),
+//     bgLight: theme.snackbar.bg_light,
+//     bgDark: theme.snackbar.bg_dark,
+//     position: theme.snackbar.position,
+//   });
+// }
+
+let noticeOutdate = 'undefined';
+// if (theme.noticeOutdate && theme.noticeOutdate.enable) {
+//   noticeOutdate = JSON.stringify({
+//     limitDay: theme.noticeOutdate.limit_day,
+//     position: theme.noticeOutdate.position,
+//     messagePrev: theme.noticeOutdate.message_prev,
+//     messageNext: theme.noticeOutdate.message_next,
+//   });
+// }
+
+let highlight = 'undefined';
+// let syntaxHighlighter = config.syntax_highlighter;
+// let highlightEnable = syntaxHighlighter ? ['highlight.js', 'prismjs'].includes(syntaxHighlighter) : (config.highlight.enable || config.prismjs.enable);
+// if (highlightEnable) {
+//   const { copy, language, height_limit, fullpage, macStyle } = theme.code_blocks;
+//   highlight = JSON.stringify({
+//     plugin: syntaxHighlighter ? syntaxHighlighter : config.highlight.enable ? 'highlight.js' : 'prismjs',
+//     highlightCopy: copy,
+//     highlightLang: language,
+//     highlightHeightLimit: height_limit,
+//     highlightFullpage: fullpage,
+//     highlightMacStyle: macStyle
+//   });
+// }
+
+const GLOBAL_CONFIG1 = {
+    root: config.root,
+    algolia: undefined,
+    localSearch: localSearch,
+    translate: translate,
+    noticeOutdate: noticeOutdate,
+    highlight: highlight,
+    copy: {
+        success: t("copy.success"),
+        error: t("copy.error"),
+        noSupport: t("copy.noSupport")
+    },
+    relativeDate: {
+        homepage: theme.post_meta.page.date_format === 'relative',
+        post: theme.post_meta.post.date_format === 'relative'
+    },
+    runtime: theme.aside.card_webinfo.runtime_date ? t("aside.card_webinfo.runtime.unit") : "",
+    dateSuffix: {
+        just: t("date_suffix.just"),
+        min: t("date_suffix.min"),
+        hour: t("date_suffix.hour"),
+        day: t("date_suffix.day"),
+        month: t("date_suffix.month")
+    },
+    copyright: copyright,
+    infinitegrid: {
+        // js: {url_for(theme.asset.egjs_infinitegrid)},
+        buttonText: t("load_more")
+    },
+    isPhotoFigcaption: theme.photofigcaption,
+    islazyload: theme.lazyload.enable,
+    isAnchor: false,
+    percent: {
+        toc: theme.toc.scroll_percent,
+        rightside: theme.rightside_scroll_percent,
+    },
+};
+---
+
+<script define:vars={{ GLOBAL_CONFIG1 }}>
+  const GLOBAL_CONFIG = GLOBAL_CONFIG1;
+</script>

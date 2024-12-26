@@ -1,0 +1,100 @@
+---
+// import { useTranslations,is_home,is_post } from '@src/utils'; // 假设这些是导入的实用函数
+// import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+// import page from '../page'; // 假设 page 是一个导入的页面数据
+
+// const options = {
+//   prev_text: '<i class="fas fa-chevron-left fa-fw"></i>',
+//   next_text: '<i class="fas fa-chevron-right fa-fw"></i>',
+//   mid_size: 1,
+//   escape: false
+// };
+const { page,lang } = Astro.props;
+// const paginationOrder = { prev: page.url.prev, next: page.url.next };
+// const isPost = is_post(Astro.url);
+// const isHome = is_home(Astro.url);
+// const t = useTranslations(lang);
+
+function generatePageNumbers(current:number, total:number) {
+  const delta = 2; // 当前页码前后显示的页码数量
+  const range = [];
+  for (let i = Math.max(2, current - delta); i <= Math.min(total - 1, current + delta); i++) {
+    range.push(i);
+  }
+  if (current - delta > 2) {
+    range.unshift('...');
+  }
+  if (current + delta < total - 1) {
+    range.push('...');
+  }
+  range.unshift(1);
+  if (total > 1) {
+    range.push(total);
+  }
+  return range;
+}
+
+const pageNumbers = generatePageNumbers(page.currentPage, page.lastPage);
+---
+<!-- {isPost ? (
+  <nav id="pagination" class="pagination-post">
+    {Object.entries(paginationOrder).map(([key, direction]) => {
+      if (!direction) return null;
+      const getPostDesc = direction.postDesc || postDesc(direction);
+      let className = key === 'prev' ? (paginationOrder.next ? '' : 'full-width') : (paginationOrder.prev ? '' : 'full-width');
+      className = getPostDesc ? className : `${className} no-desc`;
+
+      return (
+        <a class={`pagination-related ${className}`} href={url_for(direction.path)} title={direction.title} key={key}>
+          {direction.cover_type === 'img' ? (
+            <img
+              class="cover"
+              src={url_for(direction.cover)}
+              onerror={`this.onerror=null;this.src='${url_for(theme.error_img.post_page)}'`}
+              alt={`cover of ${key === 'prev' ? 'previous' : 'next'} post`}
+            />
+          ) : (
+            <div class="cover" style={`background: ${direction.cover || 'var(--default-bg-color)'}`}></div>
+          )}
+          <div class={`info ${key === 'prev' ? '' : 'text-right'}`}>
+            <div class="info-1">
+              <div class="info-item-1">{t(`pagination.${key}`)}</div>
+              <div class="info-item-2">{direction.title}</div>
+            </div>
+            {getPostDesc && (
+              <div class="info-2">
+                <div class="info-item-1">{getPostDesc}</div>
+              </div>
+            )}
+          </div>
+        </a>
+      );
+    })}
+  </nav>
+) : ( -->
+<nav id="pagination">
+  <div class="pagination">
+    {page.currentPage > 1 && (
+      <a class="extend prev" rel="prev" href={`${page.url.prev}/#content-inner`}>
+        <i class="fas fa-chevron-left fa-fw"></i>
+      </a>
+    )}
+    {pageNumbers.map(tempPage => (
+      typeof tempPage === 'number' ? (
+      tempPage === page.currentPage ? (
+        <span class="page-number current"> {page.currentPage}</span>
+        ) : (
+          <a class="page-number" href={`/${lang}/${tempPage}/#content-inner`}> {tempPage}</a>
+        )
+      ) : (
+        <span class="space">{tempPage}</span>
+      )
+    ))}
+    {page.currentPage < page.lastPage && (
+          <a class="extend next" rel="next" href={`${page.url.next}/#content-inner`}>
+      <i class="fas fa-chevron-right fa-fw"></i>
+    </a>
+    )}
+  </div>
+</nav>
+<!-- )} -->

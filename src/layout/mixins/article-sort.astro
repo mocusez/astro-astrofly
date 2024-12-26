@@ -1,0 +1,67 @@
+---
+import { useTranslations, date, full_date, date_xml } from '@src/utils'; // 假设这些是导入的实用函数
+import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+import { getConfig } from '@src/config'; // 假设 config 是一个导入的配置
+let year;
+const { lang,posts } = Astro.props;
+const config = getConfig(lang);
+const t = useTranslations(lang);
+---
+<div class="article-sort">
+{posts.map((post:any) => {
+    const article = post.data;
+    const articlePath = `/${lang}/posts/${article.abbrlink}`;
+    const tempYear = date(article.date, 'YYYY');
+    const noCoverClass = article.cover === false ? 'no-article-cover' : '';
+    const title = article.title || t('no_title');
+    const isNewYear = tempYear !== year;
+    year = tempYear;
+
+    return (
+    <div>
+        {isNewYear && <div class="article-sort-item year">{year}</div>}
+        <div class={`article-sort-item ${noCoverClass}`}>
+           {(
+            <a class="article-sort-item-img" href={articlePath} title={title}>
+            {(
+                <img
+                src={article.cover}
+                alt={title}
+                onerror={`this.onerror=null;this.src='${theme.error_img.post_page}'`}
+                />
+            )}
+            </a>
+        )}
+        {/* {article.cover && theme.cover.archives_enable && (
+            <a class="article-sort-item-img" href={url_for(article.path)} title={title}>
+            {article.cover_type === 'img' ? (
+                <img
+                src={url_for(article.cover)}
+                alt={title}
+                onerror={`this.onerror=null;this.src='${url_for(theme.error_img.post_page)}'`}
+                />
+            ) : (
+                <div style={`background: ${article.cover}`}></div>
+            )}
+            </a>
+        )} */}
+        <div class="article-sort-item-info">
+            <div class="article-sort-item-time">
+            <i class="far fa-calendar-alt"></i>
+            <time
+                class="post-meta-date-created"
+                datetime={date_xml(article.date)}
+                title={`${t('post.created')} ${full_date(article.date)}`}
+            >
+                {date(article.date, config.date_format)}
+            </time>
+            </div>
+            <a class="article-sort-item-title" href={articlePath} title={title}>
+            {title}
+            </a>
+        </div>
+        </div>
+    </div>
+    );
+})}
+</div>

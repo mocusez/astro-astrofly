@@ -1,0 +1,19 @@
+---
+import { useTranslations } from '../../utils';
+const { lang } = Astro.props;
+import { getConfig } from '@src/config';
+const config = getConfig(lang);
+const t = useTranslations(lang);
+---
+
+<div class="card-widget card-announcement">
+  <div class="item-headline">
+    <i class="fas fa-bullhorn fa-shake"></i>
+    <span>{t('aside.card_announcement')}</span>
+  </div>
+  <div class="announcement_content">
+    {config.aside.card_announcement.content.split('\n').map((line) => (
+      <p>{line}</p>
+    ))}
+  </div>
+</div>

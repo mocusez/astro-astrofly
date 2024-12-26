@@ -1,0 +1,16 @@
+---
+import Layout from './layout.astro';
+const { frontmatter } = Astro.props;
+const page = {
+  title: frontmatter.title,
+  type: "page",
+  comments: false
+}
+---
+<Layout lang="zh-CN" page={page}>
+    <div id="page" class={''}>
+        <div id="article-container">
+            <slot />
+        </div>
+    </div>
+</Layout>

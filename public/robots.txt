@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Allow: /zh-CN/posts/
+Disallow: /about/
+Disallow: /archives/
+Disallow: /js/
+Disallow: /css/
+Disallow: /contact/
+Disallow: /fonts/
+Disallow: /friends/
+Disallow: /libs/
+Disallow: /medias/
+Disallow: /page/
+Disallow: /tags/

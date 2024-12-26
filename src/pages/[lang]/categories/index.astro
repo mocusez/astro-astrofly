@@ -1,0 +1,50 @@
+---
+import Layout from '@src/layout/layout.astro';
+import { getCategoryList } from '@src/prework';
+// import Pagination from '../includes/pagination.astro'; // 假设这是导入的分页组件
+import { useTranslations } from '@src/utils'; // 假设这是导入的实用函数
+// import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+export async function getStaticPaths() {
+  const languages = ['en', 'zh-CN']; // 添加您支持的语言列表
+  return languages.map(lang => ({
+    params: { lang },
+  }));
+}
+const { lang } = Astro.params;
+const t = useTranslations(lang);
+const page = {
+  "title": t('page.category'),
+  "type": "categories",
+  "comments": false
+}
+const categories = await getCategoryList(lang);
+
+interface Category {
+  name: string;
+  path: string;
+  count: number;
+}
+
+function listCategories(categories: Category[], options: any = {}): string {
+  const { showCount = true, className = 'category-list' } = options;
+  let result = `<ul class="${className}">`;
+
+  categories.forEach(category => {
+    result += `<li class="category-list-item"><a class="category-list-link" href="/${lang}${category.path}">${category.name}</a>`;
+    if (showCount) {
+      result += `<span class="category-list-count">(${category.count})</span>`;
+    }
+    result += `</li>`;
+  });
+
+  result += `</ul>`;
+  return result;
+}
+
+const list = listCategories(categories);
+---
+<Layout lang={lang} page={page}>
+  <div id="page">
+      <div id="category-lists" set:html={list}/>
+  </div>
+</Layout>

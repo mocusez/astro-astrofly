@@ -1,0 +1,51 @@
+---
+import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+import link from '@src/link.json'; // 导入 JSON 数据
+
+let pageContent = '';
+if (link) {
+  let result = "";
+  link.forEach((i) => {
+    const className = i.class_name ? `<h2>${i.class_name}</h2>` : "";
+    const classDesc = i.class_desc ? `<div class="flink-desc">${i.class_desc}</div>` : "";
+
+    let listResult = "";
+    i.link_list.forEach((j) => {
+      listResult += `
+        <div class="flink-list-item">
+          <a href="${j.link}" title="${j.name}" target="_blank">
+            <div class="flink-item-icon">
+              <img class="no-lightbox" src="${j.avatar}" onError="this.onerror=null;this.src='${theme.error_img.flink}'" alt="${j.name}" />
+            </div>
+            <div class="flink-item-name">${j.name}</div>
+            <div class="flink-item-desc" title="${j.descr}">${j.descr}</div>
+          </a>
+        </div>`;
+    });
+
+    result += `${className}${classDesc} <div class="flink-list">${listResult}</div>`;
+  });
+
+  pageContent = result + pageContent;
+}
+import Layout from '@src/layout/layout.astro';
+const page = {
+  "title": "友链&私人收藏",
+  "type": "link",
+  "comments": false
+}
+export function getStaticPaths () {
+ return [
+    {params: {lang: 'en'}},
+    {params: {lang: 'zh-CN'}},
+  ];
+}
+const { lang } = Astro.params;
+---
+<Layout lang={lang} page={page}>
+    <div id="page" class={''}>
+        <div id="article-container">
+            <div class="flink" set:html={pageContent}/>
+          </div>
+    </div>
+</Layout>

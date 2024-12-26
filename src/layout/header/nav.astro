@@ -1,0 +1,48 @@
+---
+// import { url_for, _p, partial } from '../../../utils'; // 假设这些是导入的实用函数
+import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+const { lang } = Astro.props;
+import { getConfig } from '@src/config'; // 假设 config 是一个导入的配置
+const config = getConfig(lang);
+import MenuItem from './menu_item.astro'; // 假设这是导入的菜单项组件
+import { is_post } from '@src/utils';
+const isPost = is_post(Astro.url);
+---
+
+<nav id="nav" class="show">
+  <span id="blog-info">
+    <a class="nav-site-title" href={`/${lang}/`}>
+      {theme.nav.logo && (
+        <img class="site-icon" src={theme.nav.logo} alt="Logo" />
+      )}
+      {theme.nav.display_title && (
+        <span class="site-name">{config.title}</span>
+      )}
+    </a>
+    {isPost && (
+      // <a class="nav-page-title" href={url_for('/')}>
+      <a class="nav-page-title" href={(`/${lang}/`)}>
+        {/* <span class="site-name">{page.title || config.title}</span> */}
+        <span class="site-name">{config.title}</span>
+      </a>
+    )}
+  </span>
+  <div id="menus">
+    <!-- {theme.search.use && (
+      <div id="search-button">
+        <span class="site-page social-icon search">
+          <i class="fas fa-search fa-fw"></i>
+          <span>{' ' + _p('search.title')}</span>
+        </span>
+      </div>
+    )} -->
+    <MenuItem lang={lang}/>
+    <div id="toggle-menu">
+      <span class="site-page">
+        <i class="fas fa-bars fa-fw"></i>
+      </span>
+    </div>
+  </div>
+  <style>
+  </style>
+</nav>

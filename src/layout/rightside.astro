@@ -1,0 +1,105 @@
+---
+import { is_post, useTranslations } from '@src/utils'; // 假设这些是导入的实用函数
+import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+// import page from '../page'; // 假设 page 是一个导入的页面数据
+// const isPost = is_post(Astro.url);
+
+// const { readmode, translate, darkmode, aside, chat, commentsJsLoad, showToc } = theme;
+const aside = theme.aside;
+// const rightsideItem = (array) => {
+//   return array.map((item) => {
+//     switch (item) {
+//     //   case 'readmode':
+//     //     return is_post() && readmode ? (
+//     //       <button id="readmode" type="button" title={_p('rightside.readmode_title')}>
+//     //         <i class="fas fa-book-open"></i>
+//     //       </button>
+//     //     ) : null;
+//     //   case 'translate':
+//     //     return translate.enable ? (
+//     //       <button id="translateLink" type="button" title={_p('rightside.translate_title')}>
+//     //         {translate.default}
+//     //       </button>
+//     //     ) : null;
+//     //   case 'darkmode':
+//     //     return darkmode.enable && darkmode.button ? (
+//     //       <button id="darkmode" type="button" title={_p('rightside.night_mode_title')}>
+//     //         <i class="fas fa-adjust"></i>
+//     //       </button>
+//     //     ) : null;
+//       case 'hideAside':
+//       return aside.enable && aside.button ? (
+//         // return aside.enable && aside.button && page.aside !== false ? (
+//           <button id="hide-aside-btn" type="button" title={t('rightside.aside')}>
+//             <i class="fas fa-arrows-alt-h"></i>
+//           </button>
+//         ) : null;
+//     //   case 'toc':
+//     //     return showToc ? (
+//     //       <button id="mobile-toc-button" class="close" type="button" title={t('rightside.toc')}>
+//     //         <i class="fas fa-list-ul"></i>
+//     //       </button>
+//     //     ) : null;
+//     //   case 'chat':
+//     //     return chat.rightside_button && chat.use ? (
+//     //       <button id="chat-btn" type="button" title={_p('rightside.chat')}>
+//     //         <i class="fas fa-message"></i>
+//     //       </button>
+//     //     ) : null;
+//     //   case 'comment':
+//     //     return commentsJsLoad ? (
+//     //       <a id="to_comment" href="#post-comment" title={_p('rightside.scroll_to_comment')}>
+//     //         <i class="fas fa-comments"></i>
+//     //       </a>
+//     //     ) : null;
+//       default:
+//         return null;
+//     }
+//   });
+// };
+
+const { enable, hide, show } = theme.rightside_item_order;
+const hideArray = enable ? hide && hide.split(',') : ['readmode', 'translate', 'darkmode', 'hideAside'];
+const showArray = enable ? show && show.split(',') : ['toc', 'chat', 'comment'];
+---
+
+<div id="rightside">
+  <div id="rightside-config-hide">
+    <!-- {hideArray && rightsideItem(hideArray)} -->
+    <!-- {hideArray && aside.enable && aside.button  ? (
+        <button id="hide-aside-btn" type="button" title={t('rightside.aside')}>
+          <i class="fas fa-arrows-alt-h"></i>
+        </button>
+      ) : null} -->
+  </div>
+  <div id="rightside-config-show">
+    {enable ? (
+      hide ? (
+        <button id="rightside-config" type="button" title={t('rightside.setting')}>
+          <i class="fas fa-cog fa-spin"></i>
+        </button>
+      ) : null
+    ) : (null
+    // isPost ? (
+    //     (readmode || translate.enable || (darkmode.enable && darkmode.button)) && (
+    //       <button id="rightside-config" type="button" title={_p('rightside.setting')}>
+    //         <i class="fas fa-cog fa-spin"></i>
+    //       </button>
+    //     )
+    //   ) : (
+    //     (translate.enable || (darkmode.enable && darkmode.button)) && (
+    //       <button id="rightside-config" type="button" title={_p('rightside.setting')}>
+    //         <i class="fas fa-cog fa-spin"></i>
+    //       </button>
+    //     )
+    //   )
+    )}
+    <!-- {showArray && rightsideItem(showArray)} -->
+    <button id="go-up" type="button" title={t('rightside.back_to_top')}>
+      <span class="scroll-percent"></span>
+      <i class="fas fa-arrow-up"></i>
+    </button>
+  </div>
+</div>

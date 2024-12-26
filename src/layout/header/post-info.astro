@@ -1,0 +1,174 @@
+---
+// import { url_for, _p, date, date_xml, full_date, wordcount, min2read, urlNoIndex, full_url_for } from '@src/utils';
+import { useTranslations,date,date_xml } from '@src/utils';
+import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+import { getConfig } from '@src/config'; // 假设 config 是一个导入的配置
+const { lang,page } = Astro.props;
+const config = getConfig(lang);
+const t = useTranslations(lang);
+
+// const comments = theme.comments;
+// const postWordcount = theme.wordcount.enable && (theme.wordcount.post_wordcount || theme.wordcount.min2read);
+// const commentUse = comments.use && comments.use[0];
+const data_type_update = theme.post_meta.post.date_type === 'updated';
+// const date_type = data_type_update ? 'updated' : 'date';
+const date_icon = data_type_update ? 'fas fa-history' : 'far fa-calendar-alt';
+const date_title = data_type_update ? t('post.updated') : t('post.created');
+---
+
+<div id="post-info">
+  <h1 class="post-title">{page.title || t('no_title')}</h1>
+  <!-- {theme.post_edit.enable && (
+    <a class="post-edit-link" href={`${theme.post_edit.url}${page.source}`} title={t('post.edit')} target="_blank">
+      <i class="fas fa-pencil-alt"></i>
+    </a>
+  )} -->
+
+  <div id="post-meta">
+    <div class="meta-firstline">
+      {theme.post_meta.post.date_type && (
+        <span class="post-meta-date">
+          {theme.post_meta.post.date_type === 'both' ? (
+            <>
+              <i class="far fa-calendar-alt fa-fw post-meta-icon"></i>
+              <span class="post-meta-label">{t('post.created')}</span>
+              {/* <time class="post-meta-date-created" datetime={date_xml(page.date)} title={`${t('post.created')} ${full_date(page.date)}`}> */}
+                <time class="post-meta-date-created" datetime={date_xml(page.date)} title={`${t('post.created')} `}>
+                {date(page.date, config.date_format)}
+              </time>
+              <span class="post-meta-separator"> | </span>
+              <i class="fas fa-history fa-fw post-meta-icon"></i>
+              <span class="post-meta-label">{t('post.updated')}</span>
+            {/* //   <time class="post-meta-date-updated" datetime={date_xml(page.updated)} title={`${t('post.updated')} ${full_date(page.updated)}`}> */}
+            <time class="post-meta-date-updated" datetime={date_xml(page.updated)} title={`${t('post.updated')} `}>
+                {date(page.updated, config.date_format)}
+              </time>
+            </>
+          ) : (
+            <>
+              <i class={`fa-fw post-meta-icon ${date_icon}`}></i>
+              <span class="post-meta-label">{date_title}</span>
+              {/* <time dateTime={date_xml(page[date_type])} title={`${date_title} ${full_date(page[date_type])}`}>
+                {date(page[date_type], config.date_format)}
+              </time> */}
+            </>
+          )}
+        </span>
+      )}
+      <!-- {theme.post_meta.post.categories && page.categories.data.length > 0 && (
+        <span class="post-meta-categories">
+          {theme.post_meta.post.date_type && <span class="post-meta-separator"> | </span>}
+          {page.categories.data.map((item, index) => (
+            <span key={index}>
+              <i class="fas fa-inbox fa-fw post-meta-icon"></i>
+              <a href={url_for(item.path)} class="post-meta-categories">{item.name}</a>
+              {index < page.categories.data.length - 1 && <i class="fas fa-angle-right post-meta-separator"></i>}
+            </span>
+          ))}
+        </span>
+      )} -->
+    </div>
+
+    <div class="meta-secondline">
+      <!-- {postWordcount && (
+        <>
+          <span class="post-meta-separator"> | </span>
+          <span class="post-meta-wordcount">
+            {theme.wordcount.post_wordcount && (
+              <>
+                <i class="far fa-file-word fa-fw post-meta-icon"></i>
+                <span class="post-meta-label">{t('post.wordcount')}:</span>
+                <span class="word-count">{wordcount(page.content)}</span>
+                {theme.wordcount.min2read && <span class="post-meta-separator"> | </span>}
+              </>
+            )}
+            {theme.wordcount.min2read && (
+              <>
+                <i class="far fa-clock fa-fw post-meta-icon"></i>
+                <span class="post-meta-label">{t('post.min2read')}:</span>
+                <span>{min2read(page.content, { cn: 350, en: 160 })}{t('post.min2read_unit')}</span>
+              </>
+            )}
+          </span>
+        </>
+      )} -->
+
+      <!-- {/* PV and Count */}
+      {(() => {
+        const pvBlock = (parent_id, parent_class, parent_title, children) => (
+          <>
+            <span class="post-meta-separator"> | </span>
+            <span class={parent_class} id={parent_id} data-flag-title={parent_title}>
+              <i class="far fa-eye fa-fw post-meta-icon"></i>
+              <span class="post-meta-label">{t('post.page_pv')}:</span>
+              {children}
+            </span>
+          </>
+        );
+
+        const otherPV = () => {
+          if (theme.umami_analytics.enable && theme.umami_analytics.UV_PV.page_pv) {
+            return pvBlock('', '', '', <span id="umamiPV" data-path={url_for(page.path)}><i class="fa-solid fa-spinner fa-spin"></i></span>);
+          } else if (theme.busuanzi.page_pv) {
+            return pvBlock('', 'post-meta-pv-cv', '', <span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span>);
+          }
+          return null;
+        };
+
+        if (page.comments !== false && commentUse && !comments.lazyload) {
+          if (commentUse === 'Valine' && theme.valine.visitor) {
+            return pvBlock(url_for(page.path), 'leancloud_visitors', page.title, <span class="leancloud-visitors-count"><i class="fa-solid fa-spinner fa-spin"></i></span>);
+          } else if (commentUse === 'Waline' && theme.waline.pageview) {
+            return pvBlock('', '', '', <span class="waline-pageview-count" data-path={url_for(page.path)}><i class="fa-solid fa-spinner fa-spin"></i></span>);
+          } else if (commentUse === 'Twikoo' && theme.twikoo.visitor) {
+            return pvBlock('', '', '', <span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span>);
+          } else if (commentUse === 'Artalk' && theme.artalk.visitor) {
+            return pvBlock('', '', '', <span id="ArtalkPV"><i class="fa-solid fa-spinner fa-spin"></i></span>);
+          } else {
+            return otherPV();
+          }
+        } else {
+          return otherPV();
+        }
+      })()} -->
+
+      <!-- {comments.count && !comments.lazyload && page.comments !== false && comments.use && (
+        (() => {
+          const countBlock = (children) => (
+            <>
+              <span class="post-meta-separator"> | </span>
+              <span class="post-meta-commentcount">
+                <i class="far fa-comments fa-fw post-meta-icon"></i>
+                <span class="post-meta-label">{t('post.comments')}:</span>
+                {children}
+              </span>
+            </>
+          );
+
+          switch (commentUse) {
+            case 'Disqus':
+              return countBlock(<a class="disqus-comment-count" href={`${full_url_for(page.path)}#post-comment`}><i class="fa-solid fa-spinner fa-spin"></i></a>);
+            case 'Disqusjs':
+              return countBlock(<a class="disqusjs-comment-count" href={`${full_url_for(page.path)}#post-comment`}><i class="fa-solid fa-spinner fa-spin"></i></a>);
+            case 'Valine':
+              return countBlock(<a href={`${url_for(page.path)}#post-comment`} itemprop="discussionUrl"><span class="valine-comment-count" data-xid={url_for(page.path)} itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a>);
+            case 'Waline':
+              return countBlock(<a href={`${url_for(page.path)}#post-comment`}><span class="waline-comment-count" data-path={url_for(page.path)}><i class="fa-solid fa-spinner fa-spin"></i></span></a>);
+            case 'Gitalk':
+              return countBlock(<a href={`${url_for(page.path)}#post-comment`}><span class="gitalk-comment-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a>);
+            case 'Twikoo':
+              return countBlock(<a href={`${url_for(page.path)}#post-comment`}><span id="twikoo-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a>);
+            case 'Facebook Comments':
+              return countBlock(<a href={`${url_for(page.path)}#post-comment`}><span class="fb-comments-count" data-href={urlNoIndex()}></span></a>);
+            case 'Remark42':
+              return countBlock(<a href={`${url_for(page.path)}#post-comment`}><span class="remark42__counter" data-url={urlNoIndex()}><i class="fa-solid fa-spinner fa-spin"></i></span></a>);
+            case 'Artalk':
+              return countBlock(<a href={`${url_for(page.path)}#post-comment`}><span id="ArtalkCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a>);
+            default:
+              return null;
+          }
+        })()
+      )} -->
+    </div>
+  </div>
+</div>

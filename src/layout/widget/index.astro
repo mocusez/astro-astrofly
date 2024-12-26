@@ -1,0 +1,69 @@
+---
+
+const { lang,postHeadings } = Astro.props;
+import CardAuthor  from './card_author.astro'; // 假设这是导入的卡片组件
+import CardAnnouncement  from './card_announcement.astro';
+import CardPostToc from './card_post_toc.astro'; // 假设这是导入的卡片组件
+const showToc = true;
+import { is_post } from '@src/utils';
+const isPost = is_post(Astro.url);
+// import page from '../page'; // 假设 page 是一个导入的页面数据
+// import showToc from '../showToc'; // 假设这是导入的显示目录的配置
+// const tocStyle = page.toc_style_simple;
+// const tocStyleVal = tocStyle === true || tocStyle === false ? tocStyle : theme.toc.style_simple;
+---
+
+<div id="aside-content" class="aside-content">
+    <CardAuthor lang={lang}/>
+    <CardAnnouncement lang={lang}/>
+    <!-- <include src="../includes/widget/card_top_self.astro" /> -->
+    <div class="sticky_layout">
+      {showToc &&isPost && <CardPostToc lang={lang} postHeadings={postHeadings}/>}
+      <!-- <include src="../includes/widget/card_recent_post.astro" />
+      <include src="../includes/widget/card_ad.astro" />
+      <include src="../includes/widget/card_newest_comment.astro" />
+      <include src="../includes/widget/card_categories.astro" />
+      <include src="../includes/widget/card_tags.astro" />
+      <include src="../includes/widget/card_archives.astro" />
+      <include src="../includes/widget/card_webinfo.astro" />
+      <include src="../includes/widget/card_bottom_self.astro" /> -->
+    </div>
+  <!-- {is_post() ? (
+    <>
+      {showToc && tocStyleVal ? (
+        <div class="sticky_layout">
+          <include src="./card_post_toc.astro" />
+        </div>
+      ) : (
+        <>
+          <include src="../includes/widget/card_author.astro" />
+          <include src="../includes/widget/card_announcement.astro" />
+          <include src="../includes/widget/card_top_self.astro" />
+          <div class="sticky_layout">
+            {showToc && <include src="./card_post_toc.astro" />}
+            {page.series && <include src="./card_post_series.astro" />}
+            <include src="../includes/widget/card_recent_post.astro" />
+            <include src="../includes/widget/card_ad.astro" />
+          </div>
+        </>
+      )}
+    </>
+  ) : (
+    <>
+      <include src="../includes/widget/card_author.astro" />
+      <include src="../includes/widget/card_announcement.astro" />
+      <include src="../includes/widget/card_top_self.astro" />
+      <div class="sticky_layout">
+        {showToc && <include src="./card_post_toc.astro" />}
+        <include src="../includes/widget/card_recent_post.astro" />
+        <include src="../includes/widget/card_ad.astro" />
+        <include src="../includes/widget/card_newest_comment.astro" />
+        <include src="../includes/widget/card_categories.astro" />
+        <include src="../includes/widget/card_tags.astro" />
+        <include src="../includes/widget/card_archives.astro" />
+        <include src="../includes/widget/card_webinfo.astro" />
+        <include src="../includes/widget/card_bottom_self.astro" />
+      </div>
+    </> -->
+  <!-- )} -->
+</div>

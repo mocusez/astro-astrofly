@@ -1,0 +1,26 @@
+<!-- ---
+import { full_url_for, truncate, open_graph, is_post } from '../../../utils'; // 假设这些是导入的实用函数
+import theme from '../../../theme'; // 假设 theme 是一个导入的主题配置
+import page from '../../../page'; // 假设 page 是一个导入的页面数据
+import config from '../../../config'; // 假设 config 是一个导入的配置
+
+let ogOption;
+if (theme.Open_Graph_meta.enable) {
+  const coverVal = page.cover_type === 'img' ? page.cover : theme.avatar.img;
+  ogOption = Object.assign({
+    type: is_post() ? 'article' : 'website',
+    image: coverVal ? full_url_for(coverVal) : '',
+    fb_admins: theme.facebook_comments.user_id || '',
+    fb_app_id: theme.facebook_comments.app_id || '',
+  }, theme.Open_Graph_meta.option);
+}
+const description = page.description || page.content || page.title || config.description;
+---
+
+{theme.Open_Graph_meta.enable ? (
+  <>
+    {open_graph(ogOption)}
+  </>
+) : (
+  description && <meta name="description" content={truncate(description, 150)} />
+)} -->

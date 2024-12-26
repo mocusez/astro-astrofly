@@ -1,0 +1,78 @@
+---
+const { postHeadings } = Astro.props;
+const { parentNumber = '' } = Astro.props;
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface TOCItem extends Heading {
+  children: TOCItem[];
+}
+
+const headings = Array.isArray(postHeadings) ? postHeadings.filter(
+  h => h && typeof h.depth === 'number' && h.slug && h.text
+) : [];
+
+function buildTOCTree(headings: Heading[]): TOCItem[] {
+  const stack: TOCItem[] = [];
+  const root: TOCItem[] = [];
+
+  for (const heading of headings) {
+    const item: TOCItem = { ...heading, children: [] };
+
+    while (stack.length > 0 && stack[stack.length - 1].depth >= heading.depth) {
+      stack.pop();
+    }
+
+    if (stack.length === 0) {
+      root.push(item);
+    } else {
+      stack[stack.length - 1].children.push(item);
+    }
+    // if (
+    //   stack.length === 0 || 
+    //   stack[stack.length - 1].depth === heading.depth
+    // ) {
+    //   root.push(item);
+    // } else {
+    //   // Add as child if current depth is greater than stack top
+    //   stack[stack.length - 1].children.push(item);
+    // }
+
+    stack.push(item);
+  }
+
+  return root;
+}
+
+const tocTree = buildTOCTree(headings);
+// console.log('TOC Tree Structure:', JSON.stringify(tocTree, null, 2));
+// console.log(parentNumber);
+---
+
+<div class="toc-content">
+    <ol class="toc">
+      {tocTree.map((item, index) => {
+        const currentNumber = parentNumber ? `${parentNumber}.${index + 1}` : `${index + 1}`;
+        return (
+          <li class={`toc-item toc-level-${item.depth} active`}>
+              <a class="toc-link" href={`#${item.slug}`}>
+                  <span class="toc-number">{currentNumber}.</span>
+                  <span class="toc-text">{item.text}</span>
+              </a> 
+              {item.children.length > 0 && (
+                  <ol class="toc-child">
+                    <Astro.self 
+                        postHeadings={item.children} 
+                        parentNumber={currentNumber} 
+                    />
+                  </ol>
+              )}
+          </li>
+        );
+      })}
+    </ol>
+</div>

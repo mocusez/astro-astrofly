@@ -1,0 +1,93 @@
+---
+// import { is_archive, is_tag, is_category, is_current, is_home, findArchivesTitle, urlNoIndex, _p } from '../utils'; // 假设这些是导入的实用函数
+import { theme }from '../theme'; // 假设 theme 是一个导入的主题配置
+import { getConfig }from '../config'; // 假设 theme 是一个导入的主题配置
+const { page,lang } = Astro.props;
+import Config from './head/config.astro';
+import ConfigSite from './head/config_site.astro';
+const config = getConfig(lang);
+import { useTranslations,is_home,is_archive, is_category } from '@src/utils';
+const t = useTranslations(lang);
+
+// import page from '../page'; // 假设 page 是一个导入的页面数据
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import '../source/css/index.styl';
+
+const isHome = is_home(Astro.url);
+const isArchive = is_archive(Astro.url);
+const isCategory = is_category(Astro.url);
+
+let pageTitle;
+// pageTitle = config.title || '';
+if (isArchive) {
+  pageTitle = page.title
+  // page.title = findArchivesTitle(page, theme.menu, date);
+// }
+// if (is_tag()) {
+//   pageTitle = _p('page.tag') + ': ' + page.tag;
+} else if (isCategory) {
+  // pageTitle = t('page.category') + ': ' + page.categories;
+  pageTitle = page.title;
+// } else if (is_current('/404.html', [strict])) {
+//   pageTitle = _p('error404');
+} else {
+  pageTitle = page.title || config.title || '';
+}
+
+const tabTitle = isHome || !pageTitle ? config.title : pageTitle + ' | ' + config.title;
+const pageAuthor = config.author;
+const pageCopyright = config.copyright || config.author;
+const themeColorLight = '#ffffff';
+const themeColorDark = '#0d0d0d';
+const themeColor = theme.display_mode === 'dark' ? themeColorDark : themeColorLight;
+---
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <title>{tabTitle}</title>
+  <meta name="author" content={pageAuthor} />
+  <meta name="copyright" content={pageCopyright} />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="theme-color" content={themeColor} />
+
+  <!-- Open Graph -->
+  <!-- <include src="./head/Open_Graph.astro" /> -->
+
+  <link rel="shortcut icon" href="/img/title.webp">
+  <!-- <link rel="canonical" href={urlNoIndex(null, config.pretty_urls.trailing_index, config.pretty_urls.trailing_html)} /> -->
+
+  <!-- 預解析 -->
+  <!-- <include src="./head/preconnect.astro" /> -->
+
+  <!-- 網站驗證 -->
+  <!-- <include src="./head/site_verification.astro" /> -->
+
+  <!-- PWA -->
+  <!-- {theme.pwa && theme.pwa.enable && (
+    <include src="./head/pwa.astro" />
+  )} -->
+
+  <!-- {theme.snackbar && theme.snackbar.enable && (
+    <link rel="stylesheet" href={url_for(theme.asset.snackbar_css)} media="print" onload="this.media='all'" />
+  )}
+
+  {theme.lightbox === 'fancybox' && (
+    <link rel="stylesheet" href={url_for(theme.asset.fancybox_css)} media="print" onload="this.media='all'" />
+  )}
+
+  {inject_head_js()} -->
+
+  <!-- google_adsense -->
+  <!-- <include src="./head/google_adsense.astro" /> -->
+
+  <!-- analytics -->
+  <!-- <include src="./head/analytics.astro" /> -->
+
+
+  <!-- global config -->
+  <!-- <Config config={config} lang={lang}/>
+  <ConfigSite /> -->
+
+  <!-- {injectHtml(theme.inject.head)} -->
+</head>
