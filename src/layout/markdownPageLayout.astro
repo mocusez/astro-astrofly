@@ -1,16 +1,19 @@
 ---
 import Layout from './layout.astro';
-const { frontmatter } = Astro.props;
+const { frontmatter,lang } = Astro.props;
 const page = {
   title: frontmatter.title,
   type: "page",
   comments: false
 }
+import Comments from './third-party/comments.astro';
+import '@waline/client/style';
 ---
 <Layout lang="zh-CN" page={page}>
     <div id="page" class={''}>
         <div id="article-container">
             <slot />
         </div>
+        <Comments lang={lang}/>
     </div>
 </Layout>

@@ -1,5 +1,21 @@
 ---
-
+import { theme } from '@src/theme';
+const serverURL = theme.waline.serverURL
+const commentsScriptContent = `
+<script type="module">
+  import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+  (() => {
+      init({
+        el: '#waline-wrap',
+        serverURL: "${serverURL}",
+        pageview: true,
+        dark: 'html[data-theme="dark"]',
+        path: window.location.pathname,
+        comment: true,
+      });
+  })();
+</script>
+`;
 ---
 
 <div>
@@ -147,3 +163,4 @@
 
   <include src="../includes/third-party/search/index.astro" /> -->
 </div>
+<div set:html={commentsScriptContent}></div>

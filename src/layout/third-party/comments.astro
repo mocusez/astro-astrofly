@@ -1,0 +1,29 @@
+---
+const { lang } = Astro.props;
+import { useTranslations } from '@src/utils';
+const t = useTranslations(lang);
+
+// const commentComponents = {
+//   Waline: () => <div id="waline-wrap" />,
+// };
+---
+
+<hr class="custom-hr" />
+<div id="post-comment">
+  <div class="comment-head">
+    <div class="comment-headline">
+      <i class="fas fa-comments fa-fw"></i>
+      <span>{' ' + t('comment')}</span>
+    </div>
+  </div>
+
+  <div class="comment-wrap">
+    <!-- {theme.comments.use.map((name) => (
+      <div>
+        {commentComponents[name] && commentComponents[name]()}
+      </div>
+    ))} -->
+    <!-- {commentComponents["Waline"]} -->
+    <div id="waline-wrap" />
+  </div>
+</div>

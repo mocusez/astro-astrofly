@@ -19,5 +19,8 @@
     "sharp": "^0.33.5",
     "stylus": "^0.64.0",
     "typescript": "^5.6.3"
+  },
+  "devDependencies": {
+    "@waline/client": "^3.4.2"
   }
 }
