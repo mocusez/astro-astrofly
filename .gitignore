@@ -32,3 +32,6 @@ update.cmd
 pnpm-lock.yaml
 
 src/_scripts/
+
+*.md
+!README.md

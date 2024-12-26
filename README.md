@@ -1,8 +1,14 @@
-# Astrofly
-
 🚧🚧**Warning: The project is still in the development phase and project availability is not guaranteed** 🚧🚧
 
+# Astrofly
+
+[![Built with Astro](https://astro.badg.es/v1/built-with-astro.svg)](https://astro.build)
+
+Inspire by the [hexo-theme-butterfly](https://github.com/jerryc127/hexo-theme-butterfly) and [HsuBlog](https://github.com/KraHsu/HsuBlog)
+
 ![image-20241226125647006](README.assets/image-20241226125647006.png)
+
+
 
 ## 💻 Installation
 
