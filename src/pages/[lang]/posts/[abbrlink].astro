@@ -1,5 +1,6 @@
 ---
 import { getBlogEntry } from '@src/prework';
+import { render } from 'astro:content';
 import Layout from '@src/layout/layout.astro';
 import Comments from '@src/layout/third-party/comments.astro';
 export async function getStaticPaths() {
@@ -17,7 +18,7 @@ export async function getStaticPaths() {
   return paths;
 }
 const { entry, lang } = Astro.props;
-const { Content, headings } = await entry.render();
+const { Content, headings } = await render(entry);
 // import  "../../source/css/_layout/post.styl";
 import '@waline/client/style';
 ---

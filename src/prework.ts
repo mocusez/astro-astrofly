@@ -1,10 +1,21 @@
 import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 
+type BlogEntry = CollectionEntry<'cn_blog' | 'en_blog'>;
 
 export async function getBlogEntry(lang: string) {
-  const blogEntries = await getCollection('blog', entry => entry.id.startsWith(`${lang}/`));
-  blogEntries.sort((a, b) => new Date(b.data.updated).getTime() - new Date(a.data.updated).getTime());
-  return blogEntries;
+    const blogEntries = await (async () => {
+        switch(lang) {
+            case 'zh-CN':
+                return await getCollection('cn_blog');
+            case 'en':
+                return await getCollection('en_blog');
+            default:
+                return await getCollection('cn_blog');
+        }
+    })();
+    (blogEntries as BlogEntry[]).sort((a: BlogEntry, b: BlogEntry) => new Date(b.data.updated).getTime() - new Date(a.data.updated).getTime());
+    return blogEntries;
 }
 
 export async function getCategoryList(lang: string) {
