@@ -5,6 +5,17 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://mocusez.site',
   integrations: [sitemap()],
+  markdown: {
+    shikiConfig: {
+      langs: [
+        JSON.parse(fs.readFileSync('./src/grammer/mlir.json', 'utf-8')),
+        JSON.parse(fs.readFileSync('./src/grammer/llvm.json', 'utf-8')),
+      ],
+      langAlias: {
+
+      }
+    }
+  },
   vite: {
     css: {
       preprocessorOptions: {
