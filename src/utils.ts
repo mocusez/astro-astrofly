@@ -53,7 +53,7 @@ export function is_category(url:URL): boolean {
 }
 
 export function is_archive(url:URL): boolean {
-  return url.pathname.includes('/archieves/');
+  return url.pathname.includes('/archives/');
 }
 
 export function date_xml(date: Date): string {

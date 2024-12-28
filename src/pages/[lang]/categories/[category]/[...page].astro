@@ -1,43 +1,53 @@
 ---
 import Layout from '@src/layout/layout.astro'; // 假设这是导入的布局组件
 import ArticleSort from '@src/layout/mixins/article-sort.astro'; // 假设这是导入的 ArticleSort 组件
-// import Pagination from '../includes/pagination.astro'; // 假设这是导入的分页组件
+import Pagination from '@src/layout/pagination.astro';
 import { useTranslations } from '@src/utils'; // 假设这是导入的实用函数
 // import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
 import { getBlogEntry,getCategoryList } from '@src/prework';
 
-export async function getStaticPaths() {
+export async function getStaticPaths({ paginate }) {
   const languages = ['en', 'zh-CN']; // 添加你支持的语言列表
-  const paths: Array<{ params: { lang: string, category: string }, props: { lang: string, category: string, posts: any[] } }> = [];
+  const paths = [];
+  const POSTS_PER_PAGE = 10;
+  
   for (const lang of languages) {
     const categories = await getCategoryList(lang);
     const blogEntries = await getBlogEntry(lang);
 
-    paths.push(...categories.map(category => {
-      const categoryPosts = blogEntries.filter(entry => entry.data.categories === category.name);
-      return {
-        params: { lang, category: category.name },
-        props: { lang, category: category.name, posts: categoryPosts },
-      };
-    }));
+    for (const category of categories) {
+      const categoryPosts = blogEntries.filter(
+        entry => entry.data.categories === category.name
+      );
+      
+      paths.push(
+        ...paginate(categoryPosts, {
+          params: { lang, category: category.name },
+          props: { lang, category: category.name },
+          pageSize: POSTS_PER_PAGE,
+          routePattern: `/${lang}/categories/${category.name}/[...page]`,
+          slugFormatter: (page) => 
+            page > 1 ? `${page}` : undefined
+        })
+      );
+    }
   }
   return paths;
 }
-const { lang,category, posts } = Astro.props;
-const t = useTranslations('zh-CN');
+const { lang,category, page } = Astro.props;
+const t = useTranslations(lang);
 const decodedCategory = decodeURIComponent(category);
-const page = {
+const pageSettings = {
   "title": `${t('page.category')}: ${decodedCategory}`,
   "type": "categories",
   "comments": false
 }
 ---
 
-<Layout lang={lang} page={page}>
+<Layout lang={lang} page={pageSettings}>
     <div id="category">
       <div class="article-sort-title">{t('page.category') + ' - ' + `${decodedCategory}`}</div>
-      <!-- <div class="article-sort-title">{t('page.category') + ' - ' }</div> -->
-      <ArticleSort lang={lang} posts={posts}/>
-      {/* <Pagination /> */}
+      <ArticleSort lang={lang} posts={page.data}/>
+      <Pagination lang={lang} page={page}/>
     </div>
 </Layout>

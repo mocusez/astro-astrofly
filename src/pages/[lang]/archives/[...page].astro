@@ -1,0 +1,45 @@
+---
+import Layout from '@src/layout/layout.astro'; // 假设这是导入的布局组件
+import ArticleSort from '@src/layout/mixins/article-sort.astro'; // 假设这是导入的 ArticleSort 组件
+import Pagination from '@src/layout/pagination.astro';
+import { useTranslations } from '@src/utils';
+import { getBlogEntry,getArchiveLength } from '@src/prework';
+
+export async function getStaticPaths({ paginate }) {
+  const languages = ['en', 'zh-CN'];
+  const paths = [];
+  const POSTS_PER_PAGE = 10;
+
+  for (const lang of languages) {
+    const blogEntries = await getBlogEntry(lang);
+    paths.push(
+      ...paginate(blogEntries, {
+        params: { lang },
+        props: { lang },
+        pageSize: POSTS_PER_PAGE,
+        routePattern: `/${lang}/archives/[...page]`,
+        slugFormatter: (page) => 
+          page > 1 ? `${page}` : undefined
+      })
+    );
+  }
+  return paths;
+}
+
+const { lang,page } = Astro.props;
+const t = useTranslations(lang); 
+const pageSetting = {
+  "title": t('page.archives'),
+  "type": "archieves",
+  "comments": false
+}
+const archiveLength = await getArchiveLength(lang);
+---
+
+<Layout lang={lang} page={pageSetting}>
+  <div id="archive">
+    <div class="article-sort-title">{`${t('page.articles')} - ${archiveLength}`}</div>
+    <ArticleSort lang={lang} posts={page.data}/>
+    <Pagination lang={lang} page={page}/>
+  </div>
+</Layout>

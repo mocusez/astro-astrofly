@@ -1,19 +1,19 @@
 ---
-// import { useTranslations,is_home,is_post } from '@src/utils'; // 假设这些是导入的实用函数
+import { is_home } from '@src/utils'; // 假设这些是导入的实用函数
 // import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
-// import page from '../page'; // 假设 page 是一个导入的页面数据
-
 // const options = {
 //   prev_text: '<i class="fas fa-chevron-left fa-fw"></i>',
 //   next_text: '<i class="fas fa-chevron-right fa-fw"></i>',
 //   mid_size: 1,
 //   escape: false
 // };
-const { page,lang } = Astro.props;
+const { page } = Astro.props;
 // const paginationOrder = { prev: page.url.prev, next: page.url.next };
-// const isPost = is_post(Astro.url);
-// const isHome = is_home(Astro.url);
-// const t = useTranslations(lang);
+const middle = (() => {
+    const path = Astro.url.pathname;
+    const match = path.match(/(.*\/)[0-9]+\/?$/);
+    return match ? match[1] : (is_home(Astro.url) ? '' : path + '/');
+})();
 
 function generatePageNumbers(current:number, total:number) {
   const delta = 2; // 当前页码前后显示的页码数量
@@ -84,7 +84,7 @@ const pageNumbers = generatePageNumbers(page.currentPage, page.lastPage);
       tempPage === page.currentPage ? (
         <span class="page-number current"> {page.currentPage}</span>
         ) : (
-          <a class="page-number" href={`/${lang}/${tempPage}/#content-inner`}> {tempPage}</a>
+          <a class="page-number" href={`${middle}${tempPage}/#content-inner`}> {tempPage}</a>
         )
       ) : (
         <span class="space">{tempPage}</span>

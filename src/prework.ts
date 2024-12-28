@@ -3,7 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 
 type BlogEntry = CollectionEntry<'cn_blog' | 'en_blog'>;
 
-export async function getBlogEntry(lang: string) {
+export async function getBlogEntry(lang: string): Promise<BlogEntry[]> {
     const blogEntries = await (async () => {
         switch(lang) {
             case 'zh-CN':
@@ -18,7 +18,7 @@ export async function getBlogEntry(lang: string) {
     return blogEntries;
 }
 
-export async function getCategoryList(lang: string) {
+export async function getCategoryList(lang: string):Promise<{ name: string; path: string; count: number }[]> {
     const categoryMap: { [key: string]: { name: string; path: string; count: number } } = {};
     const blogEntries = await getBlogEntry(lang);
     blogEntries.forEach(entry => {
@@ -31,4 +31,9 @@ export async function getCategoryList(lang: string) {
         }
     });
     return Object.values(categoryMap);
+}
+
+export async function getArchiveLength(lang: string):Promise<number> {
+    const blogEntries = await getBlogEntry(lang);
+    return blogEntries.length;
 }
