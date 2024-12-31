@@ -64,7 +64,7 @@ const postsMeta = postsPagnition.data;
                       <i class="fas fa-history"></i>
                       <span class="article-meta-label">{t('post.updated')}</span>
                       <time class="post-meta-date-updated" datetime={date_xml(entry.updated)} title={`${t('post.updated')} ${entry.updated}`}>
-                        {date(entry.date, config.date_format)}
+                        {date(entry.updated, config.date_format)}
                       </time>
                     </>
                   }
