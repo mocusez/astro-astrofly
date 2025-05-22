@@ -35,7 +35,13 @@ tags:
 
 Write your content here...
 `;
-    const sanitizedTitle = title.toLowerCase().replace(/\s+/g, '-');
+    // Improve filename sanitization - replace invalid chars with hyphens
+    const sanitizedTitle = title.toLowerCase()
+      .replace(/[:\/\\?*"|<>]/g, '-') // Replace Windows/Unix invalid filename chars
+      .replace(/\s+/g, '-')           // Replace spaces with hyphens
+      .replace(/-+/g, '-')            // Replace multiple hyphens with single hyphen
+      .replace(/^-|-$/g, '');         // Remove leading/trailing hyphens
+    
     const __dirname = fileURLToPath(new URL('.', import.meta.url));
     const filePath = join(__dirname, 'src/content/blog', `${sanitizedTitle}.md`);
 
@@ -43,6 +49,7 @@ Write your content here...
     console.log(`✨ Created new post: ${filePath}`);
   } catch (error) {
     console.error('Failed to create post:', error);
+    console.error('Error details:', error.message);
   }
 };
 
@@ -69,5 +76,5 @@ switch (command) {
         updateSite();
         break;
     default:
-        console.log('Usage:\n pnpm newpage <title> [category] \n pnpm sync');
+        console.log('Usage:\n pnpm newpage <title> [category] [language] \n pnpm sync');
 }
