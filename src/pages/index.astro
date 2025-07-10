@@ -1,1 +1,16 @@
-<meta http-equiv="refresh" content="0;url=/zh-CN/" />
+<html>
+  <head>
+    <script>
+      const lang = navigator.language;
+      if (lang.startsWith('zh')) {
+        window.location.replace('/zh-CN/');
+      } else {
+        window.location.replace('/en/');
+      }
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content="0;url=/zh-CN/" />
+    </noscript>
+  </head>
+  <body></body>
+</html>
