@@ -30,7 +30,7 @@ const { lang,page } = Astro.props;
 const t = useTranslations(lang); 
 const pageSetting = {
   "title": t('page.archives'),
-  "type": "archieves",
+  "type": "archives",
   "comments": false
 }
 const archiveLength = await getArchiveLength(lang);

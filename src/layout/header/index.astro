@@ -53,26 +53,6 @@ const sub = config.subtitle.sub;
 
 <header id="page-header" class={`${headerClassName}${isFixedClass}`} style={bg_img}>
   <Nav lang={lang}/>
-  <!-- {top_img !== false ? (
-    <div id="site-info">
-      <h1 id="site-title">{config.title}</h1>
-      {theme.subtitle.enable && (
-        <>
-          <script type="module" define:vars={{ sub }}>
-            import "/node_modules/typed.js/dist/typed.umd.js";
-            new Typed("#subtitle", {
-                strings: sub,
-                startDelay: 300,
-                typeSpeed: 150,
-                loop: true,
-                backSpeed: 50,
-              });
-          </script>
-          <div id="site-subtitle">
-            <span id="subtitle"></span>
-          </div>
-        </>
-      )} -->
       {top_img !== false ? (
         isPost ? (
           <PostInfo lang={lang} page={page}/>
