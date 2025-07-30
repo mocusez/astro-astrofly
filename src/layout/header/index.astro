@@ -1,8 +1,8 @@
 ---
-import { getBgPath } from '@src/utils'; // 假设这是导入的实用函数
-import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+import { getBgPath } from '@src/utils';
+import { theme } from '@src/theme';
 const { lang,page } = Astro.props;
-import { getConfig } from '@src/config'; // 假设 config 是一个导入的配置
+import { getConfig } from '@src/config';
 const config = getConfig(lang);
 import { is_home, is_post, is_category, is_archive } from '@src/utils';
 import Nav from './nav.astro';

@@ -1,0 +1,26 @@
+[
+    {
+      "class_name": "Test",
+      "class_desc": "Testing",
+      "link_list": [
+        {
+          "name": "Nav",
+          "link": "https://nav.mocusez.site/",
+          "avatar": "https://nav.mocusez.site/favicon.ico",
+          "descr": "OneNav"
+        },
+        {
+          "name": "Github Stars",
+          "link": "https://stars.mocusez.site/",
+          "avatar": "https://stars.mocusez.site/icon.webp",
+          "descr": null
+        },
+        {
+          "name": "UNSW DKR",
+          "link": "https://unswdb.github.io/",
+          "avatar": "https://unswdb.github.io/assets/favicon.ico",
+          "descr": "UNSW Data and Knowledge Research Group"
+        }
+      ]
+    }
+  ]

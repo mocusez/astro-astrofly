@@ -27,7 +27,7 @@ export default defineEcConfig({
     langAlias: {
       C: 'c',
       CPP: 'cpp',
-      'c++': 'cpp',
+      'C++': 'cpp',
       assembly: 'asm',
     }
   },

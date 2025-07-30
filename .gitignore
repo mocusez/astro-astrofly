@@ -25,9 +25,8 @@ pnpm-debug.log*
 
 .vscode/
 
+# Blog Content
 src/content/
-
 src/_scripts/
 
-*.md
 !README.md
