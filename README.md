@@ -20,6 +20,12 @@ Inspire by the [hexo-theme-butterfly](https://github.com/jerryc127/hexo-theme-bu
   pnpm install
  ```
 
+### Use as template
+
+```
+pnpm create astro@latest -- --template mocusez/astro-astrofly
+```
+
 
 
 ## 🧞 Commands
