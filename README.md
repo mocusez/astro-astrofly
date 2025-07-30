@@ -15,7 +15,7 @@ Inspire by the [hexo-theme-butterfly](https://github.com/jerryc127/hexo-theme-bu
 - Git
 
  ```
-  git clone https://github.com/mocusez/astrofly blog
+  git clone https://github.com/mocusez/astro-astrofly.git blog
   cd blog
   pnpm install
  ```
