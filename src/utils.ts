@@ -18,8 +18,8 @@ export function getBgPath(bg_img:string): string {
 }
 
 
-import zhCN from './language/zh-CN.json'; // 导入 JSON 数据
-import en from './language/en.json'; // 导入 JSON 数据
+import zhCN from './language/zh-cn.json';
+import en from './language/en.json';
 type LocaleData = {
     [key: string]: any;
 };
