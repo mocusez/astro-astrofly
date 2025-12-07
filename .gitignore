@@ -30,3 +30,5 @@ src/content/
 src/_scripts/
 
 !README.md
+
+*.sh
