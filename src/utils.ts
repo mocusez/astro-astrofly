@@ -61,35 +61,30 @@ export function date_xml(date: Date): string {
 }
 
 export function date(date: Date, format: string): string {
-  const options: Intl.DateTimeFormatOptions = {};
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
 
   switch (format) {
     case 'YYYY-MM-DD':
-      options.year = 'numeric';
-      options.month = '2-digit';
-      options.day = '2-digit';
-      break;
+      return `${year}-${month}-${day}`;
     case 'YYYY':
-      options.year = 'numeric';
+      return `${year}`;
     case 'relative':
       // Implement relative date formatting if needed
-      break;
+      return '';
     default:
       throw new Error(`Unknown date format: ${format}`);
   }
-
-  return new Intl.DateTimeFormat('zh-CN', options).format(date);
 }
 
 export function full_date(date: Date): string {
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'long',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-  };
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hour = String(date.getHours()).padStart(2, '0');
+  const minute = String(date.getMinutes()).padStart(2, '0');
+  const second = String(date.getSeconds()).padStart(2, '0');
 
-  return new Intl.DateTimeFormat('zh-CN', options).format(date);
+  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
