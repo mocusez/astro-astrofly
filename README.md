@@ -18,6 +18,7 @@ Inspire by the [hexo-theme-butterfly](https://github.com/jerryc127/hexo-theme-bu
   git clone https://github.com/mocusez/astro-astrofly.git blog
   cd blog
   pnpm install
+  pnpm approve-builds
  ```
 
 ### Use as template
