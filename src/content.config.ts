@@ -12,14 +12,23 @@ const BlogPostSchema = z.object({
   updated: z.coerce.date(),
 });
 
+const BoardSchema = z.object({
+  title: z.string(),
+});
+
 const cn_blog = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.md', base: "./src/content/blog/zh-CN" }),
+  loader: glob({ pattern: '**/[^_]*.md', base: "./content/blog/zh-CN" }),
   schema: BlogPostSchema,
 });
 
 const en_blog = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.md', base: "./src/content/blog/en" }),
+  loader: glob({ pattern: '**/[^_]*.md', base: "./content/blog/en" }),
   schema: BlogPostSchema,
 });
 
-export const collections = { cn_blog, en_blog };
+const board = defineCollection({
+  loader: glob({ pattern: '*.md', base: "./content/board" }),
+  schema: BoardSchema,
+});
+
+export const collections = { cn_blog, en_blog, board };

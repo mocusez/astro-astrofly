@@ -1,0 +1,55 @@
+---
+import Layout from '@src/layout/layout.astro';
+import { useTranslations } from '@src/utils';
+import { getCollection } from 'astro:content';
+import { render } from 'astro:content';
+import Comments from '@src/layout/third-party/comments.astro';
+import '@waline/client/style';
+
+export async function getStaticPaths() {
+  const boardEntries = await getCollection('board');
+  
+  const langToEntryId: Record<string, string> = {
+    'en': 'en',
+    'zh-CN': 'zh-cn'
+  };
+  
+  const paths = [];
+  for (const [lang, entryId] of Object.entries(langToEntryId)) {
+    const boardEntry = boardEntries.find(entry => entry.id === entryId);
+    if (boardEntry) {
+      paths.push({
+        params: { lang },
+        props: { boardEntry }
+      });
+    }
+  }
+  
+  return paths;
+}
+
+const { lang } = Astro.params;
+const { boardEntry } = Astro.props;
+const t = useTranslations(lang);
+
+const page = {
+  title: t('page.board'),
+  type: 'board',
+  comments: true
+};
+
+if (!boardEntry) {
+  throw new Error(`Board entry not found for language: ${lang}`);
+}
+
+const { Content } = await render(boardEntry);
+---
+
+<Layout lang={lang} page={page}>
+  <div id="page">
+    <div id="article-container">
+      <Content />
+    </div>
+    <Comments lang={lang}/>
+  </div>
+</Layout>

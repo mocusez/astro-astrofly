@@ -12,7 +12,8 @@
       "articles": "全部文章",
       "tag": "标签",
       "category": "分类",
-      "archives": "归档"
+      "archives": "归档",
+      "board": "留言板"
     },
     "card_post_count": "条评论",
     "no_title": "无标题",

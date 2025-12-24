@@ -52,7 +52,7 @@ Write your content here...
       .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
 
     const __dirname = fileURLToPath(new URL('.', import.meta.url));
-    const filePath = join(__dirname, 'src/content/blog', `${sanitizedTitle}.md`);
+    const filePath = join(__dirname, 'content/blog', `${sanitizedTitle}.md`);
 
     await writeFile(filePath, template, 'utf8');
     console.log(`✨ Created new post: ${filePath}`);

@@ -12,7 +12,8 @@
       "articles": "All Articles",
       "tag": "Tag",
       "category": "Category",
-      "archives": "Archives"
+      "archives": "Archives",
+      "board": "Message Board"
     },
     "card_post_count": "comments",
     "no_title": "Untitled",
