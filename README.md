@@ -19,12 +19,14 @@ Inspire by the [hexo-theme-butterfly](https://github.com/jerryc127/hexo-theme-bu
   cd blog
   pnpm install
   pnpm approve-builds
+  mv example_content content  # Use example content as your content directory
  ```
 
 ### Use as template
 
 ```
 pnpm create astro@latest -- --template mocusez/astro-astrofly
+mv example_content content  # Use example content as your content directory
 ```
 
 
