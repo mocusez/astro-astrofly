@@ -34,7 +34,7 @@ title: ${title}
 sticky: 0
 cover: 
 categories: ${category}
-abbrlink: ${abbrlink}
+abbrlink: "${abbrlink}"
 description: 
 date: ${dateStr}
 updated: ${dateStr}
@@ -70,7 +70,7 @@ Write your content here...
 const updateSite = async (): Promise<void> => {
   try {
     // Define your script sync your 'dist' folder
-    const command = 'echo Hello';
+    const command = 'rclone sync dist CF:/test/dist';
     const { stdout, stderr } = await execPromise(command);
     if (stdout) console.log(stdout);
     if (stderr) console.error(stderr);
