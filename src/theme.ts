@@ -151,5 +151,10 @@ export const theme: ThemeConfig = {
         bg: "mysql",
         pageview: true,
         option: null
+    },
+    pwa: {
+        enable: true,
+        name: "Mocusez Blog",
+        short_name: "Mocusez",
     }
 };

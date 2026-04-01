@@ -213,3 +213,13 @@ const commentsScriptContent = `
   <include src="../includes/third-party/search/index.astro" /> -->
 </div>
 <div set:html={commentsScriptContent}></div>
+
+{theme.pwa?.enable && (
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js');
+      });
+    }
+  </script>
+)}

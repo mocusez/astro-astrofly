@@ -195,4 +195,9 @@ export interface ThemeConfig {
     pageview: boolean;
     option: Record<string, unknown> | null;
   };
+  pwa?: {
+    enable: boolean;
+    name?: string;
+    short_name?: string;
+  };
 }

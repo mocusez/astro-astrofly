@@ -71,9 +71,15 @@ const themeColor = theme.display_mode === 'dark' ? themeColorDark : themeColorLi
   <!-- <include src="./head/site_verification.astro" /> -->
 
   <!-- PWA -->
-  <!-- {theme.pwa && theme.pwa.enable && (
-    <include src="./head/pwa.astro" />
-  )} -->
+  {theme.pwa?.enable && (
+    <>
+      <link rel="manifest" href="/manifest.json" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+      <meta name="apple-mobile-web-app-title" content={theme.pwa.short_name || "Mocusez"} />
+      <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    </>
+  )}
 
   <!-- {theme.snackbar && theme.snackbar.enable && (
     <link rel="stylesheet" href={url_for(theme.asset.snackbar_css)} media="print" onload="this.media='all'" />
