@@ -1,8 +1,8 @@
 ---
 const { lang,postHeadings } = Astro.props;
-import CardAuthor  from './card_author.astro'; // 假设这是导入的卡片组件
+import CardAuthor  from './card_author.astro'; 
 import CardAnnouncement  from './card_announcement.astro';
-import CardPostToc from './card_post_toc.astro'; // 假设这是导入的卡片组件
+import CardPostToc from './card_post_toc.astro';
 const showToc = true;
 import { is_post } from '@src/utils';
 const isPost = is_post(Astro.url);
@@ -12,7 +12,7 @@ const isPost = is_post(Astro.url);
 // const tocStyleVal = tocStyle === true || tocStyle === false ? tocStyle : theme.toc.style_simple;
 ---
 
-<div id="aside-content" class="aside-content w-[26%] max-[900px]:mt-5 max-[900px]:w-full min-[900px]:pl-[15px]">
+<div id="aside-content" class="aside-content w-[26%] max-[900px]:mt-5 max-[900px]:w-full">
     <CardAuthor lang={lang}/>
     <CardAnnouncement lang={lang}/>
     <!-- <include src="../includes/widget/card_top_self.astro" /> -->

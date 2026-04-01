@@ -576,8 +576,7 @@
 
 @media (min-width: 900px) {
   .layout > :first-child {
-    @apply mr-4;
-    max-width: calc(100% - 330px - 16px);
+    max-width: calc(100% - 330px);
   }
 
   .layout.hide-aside > :first-child {
