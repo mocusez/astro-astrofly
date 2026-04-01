@@ -1,4 +1,5 @@
-// "首页": "/zh-CN/ || fas fa-home",
+import type { Language, SiteConfig } from './types';
+
 const configZhCN = {
     title: "Mox的笔记库",
     description: "探索未曾设想的道路",
@@ -11,18 +12,18 @@ const configZhCN = {
             limit_count: 50
         }
     },
-    language: "zh-CN",
+    language: "zh-CN" as const,
     source_dir: "source",
     public_dir: "public",
     tag_dir: "tags",
     archive_dir: "archives",
     category_dir: "categories",
-    "subtitle": {
-        "enable": true,
-        "effect": true,
-        "typed_option": null,
-        "source": false,
-        "sub": [
+    subtitle: {
+        enable: true,
+        effect: true,
+        typed_option: null,
+        source: false,
+        sub: [
             "初看前路近可至，细思百事竞待忙",
             "认知，信条，教导"
         ]
@@ -37,14 +38,14 @@ const configZhCN = {
             "English": "/en/ || fas fa-e"
         },
     },
-    aside:{
-        card_announcement:{
+    aside: {
+        card_announcement: {
             content: "开放友链添加，欢迎互换"
         }
     },
     date_format: "YYYY-MM-DD",
     per_page: 10
-};
+} satisfies SiteConfig;
 
 const configEn = {
     title: "Mox's Notes Library",
@@ -58,18 +59,18 @@ const configEn = {
             limit_count: 50
         }
     },
-    language: "en",
+    language: "en" as const,
     source_dir: "source",
     public_dir: "public",
     tag_dir: "tags",
     archive_dir: "archives",
     category_dir: "categories",
-    "subtitle": {
-        "enable": true,
-        "effect": true,
-        "typed_option": null,
-        "source": false,
-        "sub": [
+    subtitle: {
+        enable: true,
+        effect: true,
+        typed_option: null,
+        source: false,
+        sub: [
             "Will there is a will, there is a way",
             "Courage and Honor !"
         ]
@@ -84,16 +85,16 @@ const configEn = {
             "English": "/en/ || fas fa-e"
         },
     },
-    aside:{
-        card_announcement:{
+    aside: {
+        card_announcement: {
             content: "Open for adding friend links, welcome to exchange"
         }
     },
     date_format: "YYYY-MM-DD",
     per_page: 10
-};
+} satisfies SiteConfig;
 
-export const getConfig = (language) => {
+export const getConfig = (language: Language): SiteConfig => {
     switch (language) {
         case 'zh-CN':
             return configZhCN;

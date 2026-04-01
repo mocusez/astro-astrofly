@@ -1,6 +1,8 @@
 ---
-// import { url_for } from '../../../utils'; // 假设这些是导入的实用函数
-import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+import type { Language } from '@src/types';
+import { theme } from '@src/theme';
+
+interface Props { lang: Language; }
 const { lang } = Astro.props;
 import { getConfig } from '@src/config';
 

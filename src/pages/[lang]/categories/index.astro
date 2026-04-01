@@ -1,16 +1,16 @@
 ---
+import type { Language } from '@src/types';
 import Layout from '@src/layout/layout.astro';
 import { getCategoryList } from '@src/prework';
-// import Pagination from '../includes/pagination.astro'; // 假设这是导入的分页组件
-import { useTranslations } from '@src/utils'; // 假设这是导入的实用函数
-// import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+import { useTranslations } from '@src/utils';
+
 export async function getStaticPaths() {
   const languages = ['en', 'zh-CN']; // 添加您支持的语言列表
   return languages.map(lang => ({
     params: { lang },
   }));
 }
-const { lang } = Astro.params;
+const { lang } = Astro.params as { lang: Language };
 const t = useTranslations(lang);
 const page = {
   "title": t('page.category'),

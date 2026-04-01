@@ -1,10 +1,12 @@
 ---
+import type { Language } from '@src/types';
 import { getBlogEntry } from '@src/prework';
 import { render } from 'astro:content';
 import Layout from '@src/layout/layout.astro';
 import Comments from '@src/layout/third-party/comments.astro';
+
 export async function getStaticPaths() {
-  const languages = ['en', 'zh-CN']; 
+  const languages = ['en', 'zh-CN'];
   const paths: { params: { lang: string; abbrlink: string }; props: { entry: any; lang: string } }[] = [];
 
   for (const lang of languages) {
@@ -17,7 +19,7 @@ export async function getStaticPaths() {
 
   return paths;
 }
-const { entry, lang } = Astro.props;
+const { entry, lang } = Astro.props as { entry: any; lang: Language };
 const { Content, headings } = await render(entry);
 import '@waline/client/style';
 ---

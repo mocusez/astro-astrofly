@@ -1,5 +1,8 @@
 ---
+import type { Language } from '@src/types';
 import Layout from './layout.astro';
+
+interface Props { frontmatter: Record<string, any>; lang: Language; }
 const { frontmatter,lang } = Astro.props;
 const page = {
   title: frontmatter.title,

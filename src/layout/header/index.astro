@@ -1,6 +1,9 @@
 ---
+import type { Language } from '@src/types';
 import { getBgPath } from '@src/utils';
 import { theme } from '@src/theme';
+
+interface Props { lang: Language; page: Record<string, any>; }
 const { lang,page } = Astro.props;
 import { getConfig } from '@src/config';
 const config = getConfig(lang);
@@ -32,12 +35,12 @@ if (!theme.disable_top_img ) {
   //   top_img = theme.tag_per_img && theme.tag_per_img[page.tag];
   //   top_img = top_img || returnTopImg(theme.tag_img);
   } else if (isCategory) {
-    top_img = theme.category_per_img && theme.category_per_img[page.category];
-    top_img = top_img || returnTopImg(theme.category_img);
+    top_img = (theme.category_per_img && theme.category_per_img[page.category]) || false;
+    top_img = top_img || returnTopImg(theme.category_img ?? false);
   } else if (isHome) {
     top_img = returnTopImg(theme.index_img);
   } else if (isArchive) {
-    top_img = returnTopImg(theme.archive_img);
+    top_img = returnTopImg(theme.archive_img ?? false);
   } else {
     top_img = theme.default_top_img;
   }

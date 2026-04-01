@@ -1,6 +1,9 @@
 ---
+import type { Language } from '@src/types';
 import { useTranslations } from '@src/utils';
 import { getConfig }from '../config';
+
+interface Props { lang: Language; }
 const { lang } = Astro.props;
 const config = getConfig(lang);
 const t = useTranslations(lang);
@@ -35,7 +38,7 @@ const tagLength:number = 0;
           <div class="length-num">{categoryLength}</div>
         </a>
       </div>
-      <MenuItem />
+      <MenuItem lang={lang} />
     </div>
   </div>
 }

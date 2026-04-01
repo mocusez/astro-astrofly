@@ -1,5 +1,8 @@
 ---
-import { getConfig } from '@src/config'; // 假设 config 是一个导入的配置
+import type { Language } from '@src/types';
+import { getConfig } from '@src/config';
+
+interface Props { lang: Language; }
 const { lang } = Astro.props;
 const config = getConfig(lang);
 const trim = (str:string) => str.trim();

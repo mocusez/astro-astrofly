@@ -1,6 +1,9 @@
 ---
-import { is_post, useTranslations } from '@src/utils'; // 假设这些是导入的实用函数
-import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+import type { Language } from '@src/types';
+import { is_post, useTranslations } from '@src/utils';
+import { theme } from '@src/theme';
+
+interface Props { lang: Language; }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 // import page from '../page'; // 假设 page 是一个导入的页面数据

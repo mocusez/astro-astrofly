@@ -1,4 +1,7 @@
 ---
+import type { Language } from '@src/types';
+
+interface Props { lang: Language; }
 const { lang } = Astro.props;
 import { useTranslations } from '@src/utils';
 const t = useTranslations(lang);

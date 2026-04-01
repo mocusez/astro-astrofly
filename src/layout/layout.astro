@@ -1,9 +1,8 @@
 ---
-// import { getBgPath } from '../utils'; // 假设 getBgPath 是一个导入的实用函数
-import { theme } from '../theme'; // 假设 theme 是一个导入的主题配置
+import type { Language, PostHeading } from '@src/types';
+import { theme } from '../theme';
 import { is_post } from '@src/utils';
 const isPost = is_post(Astro.url);
-// import { is_archive, is_category, is_tag, is_post } from '../helpers'; // 假设这些是导入的辅助函数
 import Head from './head.astro';
 import HeaderIndex from './header/index.astro';
 import Footer from './footer.astro';
@@ -12,14 +11,11 @@ import LoadingIndex from './loadings/index.astro';
 import WidgetIndex from './widget/index.astro';
 import AdditionalJs from './additional-js.astro';
 import Rightside from './rightside.astro';
+
 interface Props {
-  lang: string;
-  page: any;
-  postHeadings?: Array<{
-    depth: number;
-    slug: string;
-    text: string;
-  }>;
+  lang: Language;
+  page: Record<string, any>;
+  postHeadings?: PostHeading[];
 }
 const { lang,page,postHeadings } = Astro.props;
 const asideClass = theme.aside.enable && theme.aside.hide ? 'hide-aside' : '';

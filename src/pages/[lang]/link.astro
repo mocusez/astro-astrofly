@@ -1,4 +1,5 @@
 ---
+import type { Language } from '@src/types';
 import { theme } from '@src/theme';
 import link from '@content/link.json';
 
@@ -40,7 +41,7 @@ export function getStaticPaths () {
     {params: {lang: 'zh-CN'}},
   ];
 }
-const { lang } = Astro.params;
+const { lang } = Astro.params as { lang: Language };
 ---
 <Layout lang={lang} page={page}>
     <div id="page" class={''}>

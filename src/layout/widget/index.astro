@@ -1,4 +1,7 @@
 ---
+import type { Language, PostHeading } from '@src/types';
+
+interface Props { lang: Language; postHeadings?: PostHeading[]; }
 const { lang,postHeadings } = Astro.props;
 import CardAuthor  from './card_author.astro'; 
 import CardAnnouncement  from './card_announcement.astro';

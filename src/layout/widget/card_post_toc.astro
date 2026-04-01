@@ -1,12 +1,9 @@
 ---
-// const { page, theme, _p } = Astro.props;
+import type { Language, PostHeading } from '@src/types';
+
 interface Props {
-  lang: string;
-  postHeadings?: Array<{
-    depth: number;
-    slug: string;
-    text: string;
-  }>;
+  lang: Language;
+  postHeadings?: PostHeading[];
 }
 const { lang,postHeadings } = Astro.props;
 import { useTranslations } from '@src/utils';

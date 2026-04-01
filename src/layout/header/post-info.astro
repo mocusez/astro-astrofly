@@ -1,8 +1,10 @@
 ---
-// import { url_for, _p, date, date_xml, full_date, wordcount, min2read, urlNoIndex, full_url_for } from '@src/utils';
+import type { Language } from '@src/types';
 import { useTranslations,date,date_xml } from '@src/utils';
-import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
-import { getConfig } from '@src/config'; // 假设 config 是一个导入的配置
+import { theme } from '@src/theme';
+import { getConfig } from '@src/config';
+
+interface Props { lang: Language; page: Record<string, any>; }
 const { lang,page } = Astro.props;
 const config = getConfig(lang);
 const t = useTranslations(lang);

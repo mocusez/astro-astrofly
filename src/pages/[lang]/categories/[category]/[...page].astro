@@ -1,12 +1,11 @@
 ---
-import Layout from '@src/layout/layout.astro'; // 假设这是导入的布局组件
-import ArticleSort from '@src/layout/mixins/article-sort.astro'; // 假设这是导入的 ArticleSort 组件
+import Layout from '@src/layout/layout.astro';
+import ArticleSort from '@src/layout/mixins/article-sort.astro';
 import Pagination from '@src/layout/pagination.astro';
-import { useTranslations } from '@src/utils'; // 假设这是导入的实用函数
-// import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+import { useTranslations } from '@src/utils';
 import { getBlogEntry,getCategoryList } from '@src/prework';
 
-export async function getStaticPaths({ paginate }) {
+export async function getStaticPaths({ paginate }: any) {
   const languages = ['en', 'zh-CN']; // 添加你支持的语言列表
   const paths = [];
   const POSTS_PER_PAGE = 10;
@@ -26,7 +25,7 @@ export async function getStaticPaths({ paginate }) {
           props: { lang, category: category.name },
           pageSize: POSTS_PER_PAGE,
           routePattern: `/${lang}/categories/${category.name}/[...page]`,
-          slugFormatter: (page) => 
+          slugFormatter: (page: number) =>
             page > 1 ? `${page}` : undefined
         })
       );
@@ -48,6 +47,6 @@ const pageSettings = {
     <div id="category">
       <div class="article-sort-title">{t('page.category') + ' - ' + `${decodedCategory}`}</div>
       <ArticleSort lang={lang} posts={page.data}/>
-      <Pagination lang={lang} page={page}/>
+      <Pagination page={page}/>
     </div>
 </Layout>

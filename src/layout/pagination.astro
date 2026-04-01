@@ -1,12 +1,8 @@
 ---
-import { is_home } from '@src/utils'; // 假设这些是导入的实用函数
-// import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
-// const options = {
-//   prev_text: '<i class="fas fa-chevron-left fa-fw"></i>',
-//   next_text: '<i class="fas fa-chevron-right fa-fw"></i>',
-//   mid_size: 1,
-//   escape: false
-// };
+import type { Page } from 'astro';
+import { is_home } from '@src/utils';
+
+interface Props { page: Page; }
 const { page } = Astro.props;
 // const paginationOrder = { prev: page.url.prev, next: page.url.next };
 const middle = (() => {

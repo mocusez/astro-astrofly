@@ -1,16 +1,17 @@
 import rss  from '@astrojs/rss';
 import { getBlogEntry } from '@src/prework';
 import { getConfig } from '@src/config';
+import type { Language } from '@src/types';
 
 export async function getStaticPaths() {
-  const languages = ['en', 'zh-CN']; // 添加您支持的语言列表
+  const languages: Language[] = ['en', 'zh-CN'];
   return languages.map(lang => ({
     params: { lang },
   }));
 }
 
-export async function GET({ params, site }) {
-  const lang = params.lang;
+export async function GET({ params, site }: { params: Record<string, string>; site: URL }) {
+  const lang = params.lang as Language;
   const config = getConfig(lang);
   const blogs = await getBlogEntry(lang);
   return rss({

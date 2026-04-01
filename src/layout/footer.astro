@@ -1,7 +1,10 @@
 ---
-import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
+import type { Language } from '@src/types';
+import { theme } from '@src/theme';
 import { useTranslations } from '@src/utils';
-import { getConfig } from '@src/config'; 
+import { getConfig } from '@src/config';
+
+interface Props { lang: Language; }
 const { lang } = Astro.props;
 const config = getConfig(lang);
 const t = useTranslations(lang);

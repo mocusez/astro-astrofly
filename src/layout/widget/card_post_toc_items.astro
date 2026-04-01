@@ -1,6 +1,8 @@
 ---
-const { postHeadings } = Astro.props;
-const { parentNumber = '' } = Astro.props;
+import type { PostHeading } from '@src/types';
+
+interface Props { postHeadings?: PostHeading[]; parentNumber?: string; }
+const { postHeadings, parentNumber = '' } = Astro.props;
 
 interface Heading {
   depth: number;

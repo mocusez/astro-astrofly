@@ -1,8 +1,9 @@
 ---
+import type { Language } from '@src/types';
+import type { CollectionEntry } from 'astro:content';
 import Layout from '@src/layout/layout.astro';
 import { useTranslations } from '@src/utils';
-import { getCollection } from 'astro:content';
-import { render } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import Comments from '@src/layout/third-party/comments.astro';
 import '@waline/client/style';
 
@@ -28,7 +29,7 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { lang } = Astro.params;
+const { lang } = Astro.params as { lang: Language };
 const { boardEntry } = Astro.props;
 const t = useTranslations(lang);
 

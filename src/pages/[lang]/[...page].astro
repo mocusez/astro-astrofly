@@ -2,7 +2,8 @@
 import Layout from '@src/layout/layout.astro';
 import IndexPostUI from '@src/layout/mixins/IndexPostUI.astro';
 import { getBlogEntry } from '@src/prework';
-export async function getStaticPaths({ paginate }) {
+
+export async function getStaticPaths({ paginate }: any) {
   const languages = ['en', 'zh-CN'];
   const paths = [];
   const POSTS_PER_PAGE = 10;

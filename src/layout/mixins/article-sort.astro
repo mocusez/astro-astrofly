@@ -1,8 +1,12 @@
 ---
-import { useTranslations, date, full_date, date_xml } from '@src/utils'; // 假设这些是导入的实用函数
-import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
-import { getConfig } from '@src/config'; // 假设 config 是一个导入的配置
-let year;
+import type { Language } from '@src/types';
+import type { CollectionEntry } from 'astro:content';
+import { useTranslations, date, full_date, date_xml } from '@src/utils';
+import { theme } from '@src/theme';
+import { getConfig } from '@src/config';
+
+interface Props { lang: Language; posts: CollectionEntry<'cn_blog' | 'en_blog'>[]; }
+let year: string;
 const { lang,posts } = Astro.props;
 const config = getConfig(lang);
 const t = useTranslations(lang);

@@ -1,11 +1,12 @@
 ---
-// import { url_for, _p, is_home } from '../utils'; // 假设这些是导入的实用函数
-// import { url_for, useTranslations, is_home } from '@src/utils'; // 假设这些是导入的实用函数
-import { theme } from '@src/theme'; // 假设 theme 是一个导入的主题配置
-// const indexLayout = theme.index_layout;
+import type { Language } from '@src/types';
+import type { Page } from 'astro';
+import { theme } from '@src/theme';
 import {  useTranslations,date_xml, full_date,date  } from '@src/utils';
 import { getConfig } from '@src/config';
 import Pagination from '../pagination.astro';
+
+interface Props { lang: Language; postsPagnition: Page; }
 const { lang,postsPagnition } = Astro.props;
 const config = getConfig(lang);
 const t = useTranslations(lang);
@@ -102,5 +103,5 @@ const postsMeta = postsPagnition.data;
         </div>
       );
     })}
-    <Pagination lang={lang} page={postsPagnition}/>
+    <Pagination page={postsPagnition}/>
 </div>

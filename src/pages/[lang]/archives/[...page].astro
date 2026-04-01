@@ -1,11 +1,11 @@
 ---
-import Layout from '@src/layout/layout.astro'; // 假设这是导入的布局组件
-import ArticleSort from '@src/layout/mixins/article-sort.astro'; // 假设这是导入的 ArticleSort 组件
+import Layout from '@src/layout/layout.astro';
+import ArticleSort from '@src/layout/mixins/article-sort.astro';
 import Pagination from '@src/layout/pagination.astro';
 import { useTranslations } from '@src/utils';
 import { getBlogEntry,getArchiveLength } from '@src/prework';
 
-export async function getStaticPaths({ paginate }) {
+export async function getStaticPaths({ paginate }: any) {
   const languages = ['en', 'zh-CN'];
   const paths = [];
   const POSTS_PER_PAGE = 10;
@@ -18,7 +18,7 @@ export async function getStaticPaths({ paginate }) {
         props: { lang },
         pageSize: POSTS_PER_PAGE,
         routePattern: `/${lang}/archives/[...page]`,
-        slugFormatter: (page) => 
+        slugFormatter: (page: number) =>
           page > 1 ? `${page}` : undefined
       })
     );
@@ -40,6 +40,6 @@ const archiveLength = await getArchiveLength(lang);
   <div id="archive">
     <div class="article-sort-title">{`${t('page.articles')} - ${archiveLength}`}</div>
     <ArticleSort lang={lang} posts={page.data}/>
-    <Pagination lang={lang} page={page}/>
+    <Pagination page={page}/>
   </div>
 </Layout>
