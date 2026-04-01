@@ -42,10 +42,10 @@ pnpm astro --help     # Get Astro CLI help
 - **Pages**: `src/pages/` - Route definitions using Astro's file-based routing
 
 ### Styling System
-- **Preprocessors**: Stylus and SCSS support
-- **Global Styles**: Main styles in `src/styles/`
-- **Component Styles**: Co-located with components
-- **Theme Support**: Dark/light mode switching capability
+- **CSS Framework**: Tailwind CSS with `@apply` directives and `@layer` organization
+- **Global Styles**: `src/styles/` — `global.css` (variables, base, components), `layout.css`, `pages.css`, `tags.css`
+- **Theming**: CSS custom properties (`--card-bg`, `--card-box-shadow`, etc.) with dark/light mode via `.dark` class
+- **Component Styles**: Inlined Tailwind classes on Astro components
 
 ### Build System
 - **Package Manager**: pnpm (lockfile present)
