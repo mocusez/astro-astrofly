@@ -15,11 +15,12 @@
     "@astrojs/check": "0.9.6",
     "@astrojs/rss": "4.0.14",
     "@astrojs/sitemap": "^3.6.0",
+    "@astrojs/tailwind": "^6.0.2",
     "@fortawesome/fontawesome-free": "^6.6.0",
     "astro": "5.16.6",
-    "nib": "^1.2.0",
+    "autoprefixer": "^10.4.27",
     "sharp": "^0.33.5",
-    "stylus": "^0.64.0",
+    "tailwindcss": "^3.4.19",
     "typescript": "^5.6.3"
   },
   "devDependencies": {

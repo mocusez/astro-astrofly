@@ -1,11 +1,12 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import expressiveCode from 'astro-expressive-code';
+import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://mocusez.site',
-  integrations: [sitemap(),expressiveCode()],
+  integrations: [sitemap(), expressiveCode(), tailwind()],
   vite: {
     css: {
       preprocessorOptions: {
