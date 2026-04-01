@@ -5,7 +5,7 @@ import Layout from '@src/layout/layout.astro';
 import { useTranslations } from '@src/utils';
 import { getCollection, render } from 'astro:content';
 import Comments from '@src/layout/third-party/comments.astro';
-import '@waline/client/style';
+
 
 export async function getStaticPaths() {
   const boardEntries = await getCollection('board');

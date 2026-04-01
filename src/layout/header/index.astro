@@ -63,21 +63,9 @@ const sub = config.subtitle.sub;
           <div id="site-info" class="absolute w-full px-[10px]" style="top: 43%;">
             <h1 id="site-title">{config.title}</h1>
             {theme.subtitle.enable && (
-              <>
-                <script type="module" define:vars={{ sub }}>
-                  import "/js/typed.umd.js";
-                  new Typed("#subtitle", {
-                      strings: sub,
-                      startDelay: 300,
-                      typeSpeed: 150,
-                      loop: true,
-                      backSpeed: 50,
-                    });
-                </script>
-                <div id="site-subtitle">
-                  <span id="subtitle"></span>
-                </div>
-              </>
+              <div id="site-subtitle" data-strings={JSON.stringify(sub)}>
+                <span id="subtitle"></span>
+              </div>
             )}
             {(
               <div id="site_social_icons" class="hidden mx-auto text-center md:block">
@@ -98,3 +86,19 @@ const sub = config.subtitle.sub;
     </div>
 
 </header>
+
+<script>
+  import Typed from 'typed.js';
+
+  const el = document.getElementById('site-subtitle');
+  if (el) {
+    const strings = JSON.parse(el.dataset.strings || '[]');
+    new Typed('#subtitle', {
+      strings,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    });
+  }
+</script>

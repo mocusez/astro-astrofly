@@ -35,6 +35,9 @@ importers:
       tailwindcss:
         specifier: ^3.4.19
         version: 3.4.19(tsx@4.21.0)(yaml@2.8.2)
+      typed.js:
+        specifier: ^3.0.0
+        version: 3.0.0
       typescript:
         specifier: ^5.6.3
         version: 5.9.3
@@ -2316,6 +2319,9 @@ packages:
     resolution: {integrity: sha512-5C1sg4USs1lfG0GFb2RLXsdpXqBSEhAaA/0kPL01wxzpMqLILNxIxIOKiILz+cdg/pLnOUxFYOR5yhHU666wbw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
+
+  typed.js@3.0.0:
+    resolution: {integrity: sha512-X4pjf0E7riZBo6j3NS21/7cJJ20osSOtD1OxlRoKfFU3GsdPuSpWlFcIKWf0k8uoKwBBrPuHGx+fKeU6GzRcKg==}
 
   typesafe-path@0.2.2:
     resolution: {integrity: sha512-OJabfkAg1WLZSqJAJ0Z6Sdt3utnbzr/jh+NAHoyWHJe8CMSy79Gm085094M9nvTPy22KzTVn5Zq5mbapCI/hPA==}
@@ -5269,6 +5275,8 @@ snapshots:
       get-tsconfig: 4.13.0
     optionalDependencies:
       fsevents: 2.3.3
+
+  typed.js@3.0.0: {}
 
   typesafe-path@0.2.2: {}
 

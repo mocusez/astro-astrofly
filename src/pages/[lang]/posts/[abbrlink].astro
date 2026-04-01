@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 }
 const { entry, lang } = Astro.props as { entry: any; lang: Language };
 const { Content, headings } = await render(entry);
-import '@waline/client/style';
+
 ---
 <Layout lang={lang} page={entry.data} postHeadings={headings}>
   <div id="post">

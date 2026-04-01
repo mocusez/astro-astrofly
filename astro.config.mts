@@ -27,14 +27,4 @@ function pwaAutoVersion() {
 export default defineConfig({
   site: 'https://mocusez.site',
   integrations: [sitemap(), expressiveCode(), tailwind(), pwaAutoVersion()],
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          // Add NPM package CSS/SCSS here for global import
-          additionalData: `@import "@waline/client/style";`
-        }
-      }
-    }
-  }
 });
