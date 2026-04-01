@@ -1,4 +1,3 @@
-🚧🚧**Warning: The project is still in the development phase and project availability is not guaranteed** 🚧🚧
 
 # Astrofly
 
@@ -8,7 +7,16 @@ Inspire by the [hexo-theme-butterfly](https://github.com/jerryc127/hexo-theme-bu
 
 ![image-20241226125647006](README.assets/image-20241226125647006.png)
 
+## Features
 
+- **Astro v6** — Built on the latest Astro for fast, static-first performance
+- **Bilingual Support** — Chinese (zh-CN) and English content with language-specific routing
+- **PWA Support** — Installable as a Progressive Web App with offline access, auto cache versioning on build
+- **Waline Comments** — Integrated [Waline](https://waline.js.org/) comment system with pageview counting and dark mode support
+- **Expressive Code** — Syntax highlighting powered by Shiki, with custom MLIR/LLVM grammar support
+- **Tailwind CSS** — Utility-first styling with dark/light theme toggle
+- **Sitemap** — Auto-generated sitemap for SEO
+- **Responsive Design** — Mobile-friendly layout with adaptive navigation
 
 ## 💻 Installation
 
