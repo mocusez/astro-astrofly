@@ -137,9 +137,15 @@
   /* Headings */
   h1, h2, h3, h4, h5, h6 {
     @apply relative font-bold;
-    margin: 20px 0 14px;
     color: var(--text-highlight-color);
   }
+
+  h1 { @apply text-3xl; margin: 24px 0 16px; }
+  h2 { @apply text-2xl; margin: 22px 0 14px; border-bottom: 1px solid var(--hr-border); padding-bottom: 6px; }
+  h3 { @apply text-xl;  margin: 20px 0 12px; }
+  h4 { @apply text-lg;  margin: 18px 0 10px; }
+  h5 { @apply text-base; margin: 16px 0 8px; }
+  h6 { @apply text-sm;  margin: 14px 0 6px; color: var(--font-color); }
 
   h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
     font-size: inherit !important;

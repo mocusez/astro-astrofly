@@ -35,7 +35,7 @@ const asideClass = theme.aside.enable && theme.aside.hide ? 'hide-aside' : '';
     <div id="body-wrap" class={isPost ? 'post' : 'page' + (page.type ? ' type-' + page.type : '')}>
       <HeaderIndex lang={lang} page={page}/>
 
-      <main class='layout flex justify-between pt-5 max-[900px]:flex-col' id="content-inner" >
+      <main class='layout flex justify-between pt-5 pb-8 max-[900px]:flex-col' id="content-inner" >
         <slot />
         <WidgetIndex lang={lang} postHeadings={postHeadings}/>
 
