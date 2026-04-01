@@ -17,22 +17,17 @@ import { theme } from '../../theme'; // 假设 theme 是一个导入的主题配
           const $body = document.body;
           const preloader = {
             endLoading: () => {
-              $body.style.overflow = '';
+              $body.classList.remove('overflow-locked');
               $loadingBox.classList.add('loaded');
             },
             initLoading: () => {
-              $body.style.overflow = 'hidden';
+              $body.classList.add('overflow-locked');
               $loadingBox.classList.remove('loaded');
             }
           };
 
           preloader.initLoading();
           window.addEventListener('load', preloader.endLoading);
-
-          
-          btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init');
-          btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end');
-          
         })();
       `}
     </script>

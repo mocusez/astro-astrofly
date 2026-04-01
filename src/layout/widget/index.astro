@@ -12,11 +12,11 @@ const isPost = is_post(Astro.url);
 // const tocStyleVal = tocStyle === true || tocStyle === false ? tocStyle : theme.toc.style_simple;
 ---
 
-<div id="aside-content" class="aside-content">
+<div id="aside-content" class="aside-content w-[26%] max-[900px]:mt-5 max-[900px]:w-full min-[900px]:pl-[15px]">
     <CardAuthor lang={lang}/>
     <CardAnnouncement lang={lang}/>
     <!-- <include src="../includes/widget/card_top_self.astro" /> -->
-    <div class="sticky_layout">
+    <div class="sticky_layout transition-[top] duration-300 min-[900px]:sticky min-[900px]:top-[15px]">
       {showToc &&isPost && <CardPostToc lang={lang} postHeadings={postHeadings}/>}
       <!-- <include src="../includes/widget/card_recent_post.astro" />
       <include src="../includes/widget/card_ad.astro" />

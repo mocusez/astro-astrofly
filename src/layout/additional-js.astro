@@ -9,7 +9,7 @@ const commentsScriptContent = `
         el: '#waline-wrap',
         serverURL: "${serverURL}",
         pageview: true,
-        dark: 'html[data-theme="dark"]',
+        dark: 'html.dark',
         path: window.location.pathname,
         comment: true,
       });
@@ -20,76 +20,125 @@ const commentsScriptContent = `
 
 <div>
     <script>
-        import { btf } from "@src/source/js/utils.js";
         document.addEventListener('DOMContentLoaded', () => {
             let headerContentWidth: number;
             let $nav: HTMLElement | null;
             let mobileSidebarOpen = false;
 
+            const isHidden = (ele: HTMLElement) => ele.offsetHeight === 0 && ele.offsetWidth === 0;
+
+            const overflowPaddingR = {
+                add: () => {
+                    const paddingRight = window.innerWidth - document.body.clientWidth;
+                    if (paddingRight > 0) {
+                        document.body.style.paddingRight = `${paddingRight}px`;
+                        document.body.classList.add('overflow-locked');
+                        const menuElement = document.querySelector('#page-header.nav-fixed #menus') as HTMLElement;
+                        if (menuElement) menuElement.style.paddingRight = `${paddingRight}px`;
+                    }
+                },
+                remove: () => {
+                    document.body.style.paddingRight = '';
+                    document.body.classList.remove('overflow-locked');
+                    const menuElement = document.querySelector('#page-header.nav-fixed #menus') as HTMLElement;
+                    if (menuElement) menuElement.style.paddingRight = '';
+                }
+            };
+
+            const animateIn = (ele: HTMLElement) => {
+                ele.classList.remove('animate-hide');
+                ele.classList.add('animate-show');
+            };
+
+            const animateOut = (ele: HTMLElement) => {
+                const handleEnd = () => {
+                    ele.classList.remove('animate-show', 'animate-hide');
+                    ele.removeEventListener('animationend', handleEnd);
+                };
+                ele.addEventListener('animationend', handleEnd);
+                ele.classList.remove('animate-show');
+                ele.classList.add('animate-hide');
+            };
+
             const adjustMenu = (init: boolean) => {
-                const getAllWidth = ele => Array.from(ele).reduce((width:number, i:Element) => width + (i as HTMLElement).offsetWidth, 0)
+                const getAllWidth = (ele: HTMLCollection) => Array.from(ele).reduce((width: number, i: Element) => width + (i as HTMLElement).offsetWidth, 0);
 
                 if (init) {
-                    const blogInfoWidth = getAllWidth(document.querySelector('#blog-info > a')!.children)
-                    const menusWidth = getAllWidth(document.getElementById('menus')!.children)
-                    headerContentWidth = (blogInfoWidth as number) + (menusWidth as number)
-                    $nav = document.getElementById('nav')
+                    const blogInfoWidth = getAllWidth(document.querySelector('#blog-info > a')!.children);
+                    const menusWidth = getAllWidth(document.getElementById('menus')!.children);
+                    headerContentWidth = (blogInfoWidth as number) + (menusWidth as number);
+                    $nav = document.getElementById('nav');
                 }
 
-                const hideMenuIndex = window.innerWidth <= 768 || headerContentWidth > $nav.offsetWidth - 120
-                $nav.classList.toggle('hide-menu', hideMenuIndex)
-            }
+                const hideMenuIndex = window.innerWidth <= 768 || headerContentWidth > $nav!.offsetWidth - 120;
+                $nav!.classList.toggle('hide-menu', hideMenuIndex);
+            };
 
-            // 初始化header
             const initAdjust = () => {
-                adjustMenu(true)
-                $nav.classList.add('show')
-            }
+                adjustMenu(true);
+                $nav!.classList.add('show');
+            };
 
-            // sidebar menus
             const sidebarFn = {
                 open: () => {
-                    btf.overflowPaddingR.add()
-                    btf.animateIn(document.getElementById('menu-mask'), 'to_show 0.5s')
-                    document.getElementById('sidebar-menus').classList.add('open')
-                    mobileSidebarOpen = true
+                    overflowPaddingR.add();
+                    animateIn(document.getElementById('menu-mask')!);
+                    document.getElementById('sidebar-menus')!.classList.add('open');
+                    mobileSidebarOpen = true;
                 },
                 close: () => {
-                    btf.overflowPaddingR.remove()
-                    btf.animateOut(document.getElementById('menu-mask'), 'to_hide 0.5s')
-                    document.getElementById('sidebar-menus').classList.remove('open')
-                    mobileSidebarOpen = false
+                    overflowPaddingR.remove();
+                    animateOut(document.getElementById('menu-mask')!);
+                    document.getElementById('sidebar-menus')!.classList.remove('open');
+                    mobileSidebarOpen = false;
                 }
-            }
+            };
 
             const openMobileMenu = () => {
-                const toggleMenu = document.getElementById('toggle-menu')
-                if (!toggleMenu) return
-                btf.addEventListenerPjax(toggleMenu, 'click', () => { sidebarFn.open() })
-                // toggleMenu.addEventListener('click', () => {
-                //     sidebarFn.open();
-                // });
-            }
+                const toggleMenu = document.getElementById('toggle-menu');
+                if (!toggleMenu) return;
+                toggleMenu.addEventListener('click', () => { sidebarFn.open(); });
+            };
 
-            
             const refreshFn = () => {
-                initAdjust()
-                openMobileMenu()
-            }
+                initAdjust();
+                openMobileMenu();
+            };
 
             const unRefreshFn = () => {
                 window.addEventListener('resize', () => {
-                    adjustMenu(false)
-                    mobileSidebarOpen && btf.isHidden(document.getElementById('toggle-menu')) && sidebarFn.close()
-                })
+                    adjustMenu(false);
+                    mobileSidebarOpen && isHidden(document.getElementById('toggle-menu')!) && sidebarFn.close();
+                });
 
-                const menuMask = document.getElementById('menu-mask')
-                menuMask && menuMask.addEventListener('click', () => { sidebarFn.close() })
+                const menuMask = document.getElementById('menu-mask');
+                menuMask && menuMask.addEventListener('click', () => { sidebarFn.close(); });
+            };
+
+            refreshFn();
+            unRefreshFn();
+
+            // Dark mode toggle functionality
+            const darkModeBtn = document.getElementById('darkmode')
+            if (darkModeBtn) {
+                const updateDarkModeIcon = () => {
+                    const isDark = document.documentElement.classList.contains('dark')
+                    const icon = darkModeBtn.querySelector('i')
+                    if (icon) {
+                        icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon'
+                    }
+                }
+
+                const toggleDarkMode = () => {
+                    document.documentElement.classList.toggle('dark')
+                    const isDark = document.documentElement.classList.contains('dark')
+                    localStorage.setItem('theme', isDark ? 'dark' : 'light')
+                    updateDarkModeIcon()
+                }
+
+                darkModeBtn.addEventListener('click', toggleDarkMode)
+                updateDarkModeIcon()
             }
-
-            btf.addGlobalFn('pjaxComplete', refreshFn, 'refreshFn')
-            refreshFn()
-            unRefreshFn()
         })
     </script>
 

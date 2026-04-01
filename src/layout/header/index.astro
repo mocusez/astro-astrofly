@@ -51,13 +51,13 @@ if (!theme.disable_top_img ) {
 const sub = config.subtitle.sub;
 ---
 
-<header id="page-header" class={`${headerClassName}${isFixedClass}`} style={bg_img}>
+<header id="page-header" class={`${headerClassName}${isFixedClass} relative w-full bg-theme bg-center bg-cover bg-no-repeat transition-all duration-500`} style={bg_img}>
   <Nav lang={lang}/>
       {top_img !== false ? (
         isPost ? (
           <PostInfo lang={lang} page={page}/>
         ) : isHome ? (
-          <div id="site-info">
+          <div id="site-info" class="absolute w-full px-[10px]" style="top: 43%;">
             <h1 id="site-title">{config.title}</h1>
             {theme.subtitle.enable && (
               <>
@@ -77,20 +77,20 @@ const sub = config.subtitle.sub;
               </>
             )}
             {(
-              <div id="site_social_icons">
+              <div id="site_social_icons" class="hidden mx-auto text-center md:block">
                 <Social lang={lang}/>
               </div>
             )}
           </div>
         ) : (
-          <div id="page-site-info">
+          <div id="page-site-info" class="absolute w-full px-[10px]" style="top: 200px;">
             {<h1 id="site-title">{page.title || page.tag || page.category}</h1> }
           </div>
         )
       ) : (
         !isPost && <h1 class="title-seo">{page.title || page.tag || page.category || config.title}</h1>
       )}
-    <div id="scroll-down">
+    <div id="scroll-down" class="absolute bottom-[10px] w-full cursor-pointer">
       <i class="fas fa-angle-down scroll-down-effects"></i>
     </div>
 

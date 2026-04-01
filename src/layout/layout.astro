@@ -22,8 +22,9 @@ interface Props {
   }>;
 }
 const { lang,page,postHeadings } = Astro.props;
+const asideClass = theme.aside.enable && theme.aside.hide ? 'hide-aside' : '';
 ---
-<html lang={lang} data-theme={theme.display_mode} class={theme.aside.enable && theme.aside.hide ? 'hide-aside' : ''}>
+<html lang={lang} class={asideClass}>
   <Head lang={lang} page={page}/>
   <body>
     <LoadingIndex />
@@ -38,7 +39,7 @@ const { lang,page,postHeadings } = Astro.props;
     <div id="body-wrap" class={isPost ? 'post' : 'page' + (page.type ? ' type-' + page.type : '')}>
       <HeaderIndex lang={lang} page={page}/>
 
-      <main class='layout' id="content-inner" >
+      <main class='layout flex justify-between pt-5 max-[900px]:flex-col' id="content-inner" >
         <slot />
         <WidgetIndex lang={lang} postHeadings={postHeadings}/>
 

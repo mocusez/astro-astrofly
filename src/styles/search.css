@@ -1,0 +1,129 @@
+/* =================================================================
+   Search Styles (migrated from _search/*.styl)
+   ================================================================= */
+
+/* =================================================================
+   Search Dialog (from _search/index.styl)
+   ================================================================= */
+
+.search-dialog {
+  @apply fixed hidden z-[1001] p-5 rounded-lg;
+  top: 10%;
+  left: 50%;
+  margin-left: -300px;
+  width: 600px;
+  background: var(--search-bg);
+  --search-height: 100vh;
+}
+
+@media screen and (max-width: 768px) {
+  .search-dialog {
+    @apply top-0 left-0 w-full h-full m-0;
+    border-radius: 0;
+  }
+}
+
+.search-dialog .search-nav {
+  @apply m-0 mb-[14px] leading-none;
+  color: var(--search-color, #49b1f5);
+  font-size: 1.4em;
+}
+
+.search-dialog .search-nav .search-dialog-title {
+  @apply mr-[10px];
+}
+
+.search-dialog .search-nav .search-close-button {
+  @apply float-right;
+  color: #858585;
+  transition: color 0.2s ease-in-out;
+}
+
+.search-dialog .search-nav .search-close-button:hover {
+  color: var(--search-color, #49b1f5);
+}
+
+.search-dialog hr {
+  @apply my-[15px] mx-auto;
+  border: 0;
+  border-top: 1px dashed var(--hr-border);
+}
+
+/* =================================================================
+   Search Mask
+   ================================================================= */
+
+#search-mask {
+  @apply fixed hidden inset-0 z-[1000];
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* =================================================================
+   Local Search (from _search/local-search.styl)
+   ================================================================= */
+
+#local-search .search-dialog .local-search-box {
+  @apply m-0 mx-auto w-full max-w-full;
+}
+
+#local-search .search-dialog .local-search-box input {
+  @apply py-[5px] px-[14px] w-full outline-none;
+  border: 2px solid var(--search-color, #49b1f5);
+  border-radius: 40px;
+  background: var(--search-bg);
+  color: var(--search-input-color);
+  -webkit-appearance: none;
+}
+
+#local-search .search-dialog .search-wrap {
+  @apply hidden;
+}
+
+#local-search .search-dialog .local-search-hit-item {
+  @apply ml-6 pl-[3px];
+  line-height: 1.8;
+}
+
+#local-search .search-dialog .local-search-hit-item::marker {
+  color: var(--search-color, #49b1f5);
+  font-weight: bold;
+  font-style: italic;
+}
+
+#local-search .search-dialog .local-search-hit-item a {
+  color: var(--search-a-color);
+}
+
+#local-search .search-dialog .local-search-hit-item a:hover {
+  color: var(--search-color, #49b1f5);
+}
+
+#local-search .search-dialog .local-search-hit-item .search-result-title {
+  @apply font-semibold;
+}
+
+#local-search .search-dialog .local-search-hit-item .search-result {
+  @apply m-0 mb-2 break-all;
+  font-size: 0.9em;
+}
+
+#local-search .search-dialog .search-result-list {
+  @apply -mx-5 px-[22px] m-0;
+  overflow-y: overlay;
+  max-height: calc(80vh - 180px);
+}
+
+@media screen and (max-width: 768px) {
+  #local-search .search-dialog .search-result-list {
+    max-height: calc(var(--search-height) - 190px) !important;
+  }
+}
+
+/* =================================================================
+   Search Keyword Highlight
+   ================================================================= */
+
+.search-keyword {
+  @apply bg-transparent font-semibold;
+  color: #f47466;
+}

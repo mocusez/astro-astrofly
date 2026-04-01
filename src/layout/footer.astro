@@ -12,8 +12,8 @@ const showOwner = theme.footer.owner.enable;
 const showCopyright = theme.footer.copyright;
 const customText = theme.footer.custom_text;
 ---
-<footer id="footer">
-<div id="footer-wrap">
+<footer id="footer" class="relative bg-theme bg-scroll bg-bottom bg-cover">
+<div id="footer-wrap" class="relative py-10 px-5 text-center" style="color: var(--light-grey);">
   {showOwner && (
     <div class="copyright">
       {sinceYear && sinceYear != currentYear ? (
@@ -28,7 +28,7 @@ const customText = theme.footer.custom_text;
     <div class="framework-info">
       <span>{t('footer.framework')} </span>
       <a href="https://astro.build" rel="external nofollow noreferrer">Astro</a>
-      <span class="footer-separator">|</span>
+      <span class="mx-1">|</span>
       <span>{t('footer.theme')} </span>
       <a href="https://github.com/mocusez/astro-astrofly">Astrofly</a>
     </div>

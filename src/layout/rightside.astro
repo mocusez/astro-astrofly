@@ -67,36 +67,14 @@ const showArray = enable ? show && show.split(',') : ['toc', 'chat', 'comment'];
 
 <div id="rightside">
   <div id="rightside-config-hide">
-    <!-- {hideArray && rightsideItem(hideArray)} -->
-    <!-- {hideArray && aside.enable && aside.button  ? (
-        <button id="hide-aside-btn" type="button" title={t('rightside.aside')}>
-          <i class="fas fa-arrows-alt-h"></i>
-        </button>
-      ) : null} -->
+    <button id="darkmode" type="button" title={t('rightside.dark_mode')}>
+      <i class="fas fa-moon"></i>
+    </button>
   </div>
   <div id="rightside-config-show">
-    {enable ? (
-      hide ? (
-        <button id="rightside-config" type="button" title={t('rightside.setting')}>
-          <i class="fas fa-cog fa-spin"></i>
-        </button>
-      ) : null
-    ) : (null
-    // isPost ? (
-    //     (readmode || translate.enable || (darkmode.enable && darkmode.button)) && (
-    //       <button id="rightside-config" type="button" title={_p('rightside.setting')}>
-    //         <i class="fas fa-cog fa-spin"></i>
-    //       </button>
-    //     )
-    //   ) : (
-    //     (translate.enable || (darkmode.enable && darkmode.button)) && (
-    //       <button id="rightside-config" type="button" title={_p('rightside.setting')}>
-    //         <i class="fas fa-cog fa-spin"></i>
-    //       </button>
-    //     )
-    //   )
-    )}
-    <!-- {showArray && rightsideItem(showArray)} -->
+    <button id="rightside-config" type="button" title={t('rightside.setting')}>
+      <i class="fas fa-cog fa-spin"></i>
+    </button>
     <button id="go-up" type="button" title={t('rightside.back_to_top')}>
       <span class="scroll-percent"></span>
       <i class="fas fa-arrow-up"></i>

@@ -9,8 +9,8 @@ import { is_post } from '@src/utils';
 const isPost = is_post(Astro.url);
 ---
 
-<nav id="nav" class="show">
-  <span id="blog-info">
+<nav id="nav" class="show absolute top-0 z-[90] flex items-center w-full h-[60px] text-[1.3em] opacity-0 px-[36px] max-md:px-4 transition-all duration-500">
+  <span id="blog-info" class="flex-1" style="color: var(--light-grey);">
     <a class="nav-site-title" href={`/${lang}/`}>
       {theme.nav.logo && (
         <img class="site-icon" src={theme.nav.logo} alt="Logo" />
@@ -43,6 +43,4 @@ const isPost = is_post(Astro.url);
       </span>
     </div>
   </div>
-  <style>
-  </style>
 </nav>

@@ -7,9 +7,9 @@ const t = useTranslations(lang);
 ---
 
 <div class="card-widget card-announcement">
-  <div class="item-headline">
-    <i class="fas fa-bullhorn fa-shake"></i>
-    <span>{t('aside.card_announcement')}</span>
+  <div class="item-headline pb-[6px] text-[1.2em]">
+    <i class="fas fa-bullhorn fa-shake text-red-600"></i>
+    <span class="ml-[6px]">{t('aside.card_announcement')}</span>
   </div>
   <div class="announcement_content">
     {config.aside.card_announcement.content.split('\n').map((line) => (

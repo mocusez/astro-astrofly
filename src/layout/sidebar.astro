@@ -18,10 +18,10 @@ const tagLength:number = 0;
   <div id="sidebar">
     <div id="menu-mask"></div>
     <div id="sidebar-menus">
-      <div class="avatar-img text-center">
+      <div class="avatar-img text-center my-5 mx-auto">
         <Image src={HeadImage} onerror={`this.onerror=null;this.src='${theme.error_img.flink}'`} alt="avatar" />
       </div>
-      <div class="site-data text-center">
+      <div class="site-data text-center px-[10px]">
         <a href={`${config.archive_dir}/`}>
           <div class="headline">{t('aside.articles')}</div>
           <div class="length-num">{blogLength}</div>

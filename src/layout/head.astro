@@ -1,7 +1,7 @@
 ---
 // import { is_archive, is_tag, is_category, is_current, is_home, findArchivesTitle, urlNoIndex, _p } from '../utils'; // 假设这些是导入的实用函数
-import { theme }from '../theme'; // 假设 theme 是一个导入的主题配置
-import { getConfig }from '../config'; // 假设 theme 是一个导入的主题配置
+import { theme }from '../theme'; 
+import { getConfig }from '../config'; 
 const { page,lang } = Astro.props;
 import Config from './head/config.astro';
 import ConfigSite from './head/config_site.astro';
@@ -9,9 +9,14 @@ const config = getConfig(lang);
 import { useTranslations,is_home,is_archive, is_category } from '@src/utils';
 const t = useTranslations(lang);
 
-// import page from '../page'; // 假设 page 是一个导入的页面数据
+// import page from '../page'; 
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import '../source/css/index.styl';
+import '../styles/global.css';  // Tailwind CSS (global + base)
+import '../styles/layout.css';  // Layout component styles
+import '../styles/pages.css';   // Page-specific styles
+import '../styles/tags.css';    // Tag plugins styles
+import '../styles/modes.css';   // Theme modes (readmode)
+import '../styles/search.css';  // Search styles
 
 const isHome = is_home(Astro.url);
 const isArchive = is_archive(Astro.url);

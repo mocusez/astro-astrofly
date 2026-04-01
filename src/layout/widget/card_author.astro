@@ -18,13 +18,13 @@ const t = useTranslations(lang);
 
 {theme.aside.card_author.enable && (
   <div class="card-widget card-info text-center">
-    <div class="avatar-img">
+    <div class="avatar-img my-5 mx-auto">
       <Image src={HeadImage} onerror={`this.onerror=null;this.src='${theme.error_img.flink}'`} alt="avatar" />
     </div>
-    <div class="author-info-name">{config.author}</div>
-    <div class="author-info-description">{config.description}</div>
+    <div class="author-info-name font-medium text-[1.57em]">{config.author}</div>
+    <div class="author-info-description" style="margin-top: -0.42em;">{config.description}</div>
 
-    <div class="site-data">
+    <div class="site-data my-[14px] mb-1">
       <a href={`/${lang}/${config.archive_dir}/`}>
         <div class="headline">{t('aside.articles')}</div>
         <div class="length-num">{blogLength}</div>
@@ -40,14 +40,14 @@ const t = useTranslations(lang);
     </div>
 
     {theme.aside.card_author.button.enable && (
-      <a id="card-info-btn" href={theme.aside.card_author.button.link}>
+      <a id="card-info-btn" class="block mt-[14px] text-center rounded-[7px]" href={theme.aside.card_author.button.link} style="background-color: var(--btn-bg); color: var(--btn-color);">
         <i class={theme.aside.card_author.button.icon}></i>
-        <span>{theme.aside.card_author.button.text}</span>
+        <span class="pl-[10px]">{theme.aside.card_author.button.text}</span>
       </a>
     )}
 
     {(
-      <div class="card-info-social-icons">
+      <div class="card-info-social-icons my-[6px] -mb-[6px]">
         <Social lang={lang}/>
       </div>
     )}
