@@ -101,6 +101,7 @@
       "readmode_title": "Reading Mode",
       "translate_title": "Toggle Between Traditional and Simplified Chinese",
       "night_mode_title": "Toggle Between Light and Dark Mode",
+      "dark_mode": "Toggle Dark Mode",
       "back_to_top": "Back to Top",
       "toc": "Table of Contents",
       "scroll_to_comment": "Scroll to Comments",
