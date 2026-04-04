@@ -83,7 +83,7 @@ let highlight = 'undefined';
 //   });
 // }
 
-const GLOBAL_CONFIG1 = {
+const GLOBAL_CONFIG = {
     root: config.root,
     algolia: undefined,
     localSearch: localSearch,
@@ -122,6 +122,6 @@ const GLOBAL_CONFIG1 = {
 };
 ---
 
-<script define:vars={{ GLOBAL_CONFIG1 }}>
-  const GLOBAL_CONFIG = GLOBAL_CONFIG1;
+<script is:inline define:vars={{ GLOBAL_CONFIG }}>
+  window.GLOBAL_CONFIG = GLOBAL_CONFIG;
 </script>

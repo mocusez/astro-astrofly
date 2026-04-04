@@ -1,7 +1,8 @@
 ---
 import type { Language } from '@src/types';
-import { is_post, useTranslations } from '@src/utils';
-import { theme } from '@src/theme';
+// import { is_post, useTranslations } from '@src/utils';
+import { useTranslations } from '@src/utils';
+// import { theme } from '@src/theme';
 
 interface Props { lang: Language; }
 const { lang } = Astro.props;
@@ -10,7 +11,7 @@ const t = useTranslations(lang);
 // const isPost = is_post(Astro.url);
 
 // const { readmode, translate, darkmode, aside, chat, commentsJsLoad, showToc } = theme;
-const aside = theme.aside;
+// const aside = theme.aside;
 // const rightsideItem = (array) => {
 //   return array.map((item) => {
 //     switch (item) {
@@ -63,9 +64,9 @@ const aside = theme.aside;
 //   });
 // };
 
-const { enable, hide, show } = theme.rightside_item_order;
-const hideArray = enable ? hide && hide.split(',') : ['readmode', 'translate', 'darkmode', 'hideAside'];
-const showArray = enable ? show && show.split(',') : ['toc', 'chat', 'comment'];
+// const { enable, hide, show } = theme.rightside_item_order;
+// const _hideArray = enable ? hide && hide.split(',') : ['readmode', 'translate', 'darkmode', 'hideAside'];
+// const _showArray = enable ? show && show.split(',') : ['toc', 'chat', 'comment'];
 ---
 
 <div id="rightside">

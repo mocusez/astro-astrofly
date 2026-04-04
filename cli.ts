@@ -4,7 +4,6 @@ import { randomBytes } from 'crypto';
 import { fileURLToPath } from 'url';
 import { exec } from 'child_process';
 import { promisify } from 'util';
-import type { ExecException } from 'child_process';
 
 const execPromise = promisify(exec);
 

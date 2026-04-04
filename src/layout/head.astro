@@ -5,11 +5,12 @@ import { getConfig }from '../config';
 
 interface Props { lang: Language; page: Record<string, any>; }
 const { page,lang } = Astro.props;
-import Config from './head/config.astro';
-import ConfigSite from './head/config_site.astro';
+// import Config from './head/config.astro';
+// import ConfigSite from './head/config_site.astro';
 const config = getConfig(lang);
-import { useTranslations,is_home,is_archive, is_category } from '@src/utils';
-const t = useTranslations(lang);
+// import { useTranslations,is_home,is_archive, is_category } from '@src/utils';
+import { is_home,is_archive, is_category } from '@src/utils';
+// const t = useTranslations(lang);
 
 // import page from '../page'; 
 import '@fortawesome/fontawesome-free/css/all.min.css'

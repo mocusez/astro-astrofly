@@ -26,8 +26,9 @@ let showToc = false;
 // }
 ---
 
-<script id="config-diff" define:vars={{isPost,isHome,isHighlightShrink,showToc}}>
-  var GLOBAL_CONFIG_SITE = {
+<script is:inline id="config-diff" define:vars={{isPost,isHome,isHighlightShrink,showToc}}>
+  // @ts-nocheck
+  window.GLOBAL_CONFIG_SITE = {
     title: 'Testing',
     isPost: isPost,
     isHome: isHome,
