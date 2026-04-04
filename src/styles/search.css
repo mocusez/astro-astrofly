@@ -1,52 +1,95 @@
 /* =================================================================
-   Search Styles (migrated from _search/*.styl)
+   Search Styles - Optimized for Readability
    ================================================================= */
 
 /* =================================================================
-   Search Dialog (from _search/index.styl)
+   Search Dialog
    ================================================================= */
 
 .search-dialog {
-  @apply fixed hidden z-[1001] p-5 rounded-lg;
-  top: 10%;
+  @apply fixed z-[1001] p-6 rounded-xl;
+  top: 5%;
   left: 50%;
-  margin-left: -300px;
-  width: 600px;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 850px;
+  max-height: 90vh;
   background: var(--search-bg);
-  --search-height: 100vh;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 @media screen and (max-width: 768px) {
-  .search-dialog {
-    @apply top-0 left-0 w-full h-full m-0;
-    border-radius: 0;
+  #search .search-dialog {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    transform: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: max(env(safe-area-inset-top), 16px) 16px max(env(safe-area-inset-bottom), 16px);
+  }
+  
+  .search-dialog .search-nav {
+    font-size: 1.3em;
+    margin-bottom: 12px;
+  }
+  
+  .search-dialog .search-nav .search-close-button {
+    padding: 8px !important;
+    font-size: 1em !important;
+  }
+  
+  /* 确保 Pagefind UI 容器占满空间 */
+  #pagefind-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  
+  #pagefind-container .pagefind-ui {
+    height: calc(100vh - 100px) !important;
+    max-height: calc(100vh - 100px) !important;
   }
 }
 
 .search-dialog .search-nav {
-  @apply m-0 mb-[14px] leading-none;
+  @apply flex items-center justify-between m-0 mb-4 leading-none;
   color: var(--search-color, #49b1f5);
-  font-size: 1.4em;
+  font-size: 1.5em;
+  font-weight: 600;
+  flex-shrink: 0;
 }
 
 .search-dialog .search-nav .search-dialog-title {
-  @apply mr-[10px];
+  @apply flex items-center gap-2;
 }
 
 .search-dialog .search-nav .search-close-button {
-  @apply float-right;
+  @apply cursor-pointer p-2 rounded-full transition-all duration-200;
   color: #858585;
-  transition: color 0.2s ease-in-out;
+  font-size: 0.8em;
 }
 
 .search-dialog .search-nav .search-close-button:hover {
   color: var(--search-color, #49b1f5);
+  background: rgba(73, 177, 245, 0.1);
 }
 
 .search-dialog hr {
-  @apply my-[15px] mx-auto;
+  @apply my-4 mx-auto;
   border: 0;
   border-top: 1px dashed var(--hr-border);
+  flex-shrink: 0;
 }
 
 /* =================================================================
@@ -54,76 +97,350 @@
    ================================================================= */
 
 #search-mask {
-  @apply fixed hidden inset-0 z-[1000];
-  background: rgba(0, 0, 0, 0.6);
+  @apply fixed inset-0 z-[1000];
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+#search.hidden #search-mask,
+#search.hidden .search-dialog {
+  display: none;
+}
+
+#search:not(.hidden) #search-mask,
+#search:not(.hidden) .search-dialog {
+  display: flex;
 }
 
 /* =================================================================
-   Local Search (from _search/local-search.styl)
+   Pagefind UI Custom Styles - Enhanced Readability
    ================================================================= */
 
-#local-search .search-dialog .local-search-box {
-  @apply m-0 mx-auto w-full max-w-full;
-}
-
-#local-search .search-dialog .local-search-box input {
-  @apply py-[5px] px-[14px] w-full outline-none;
-  border: 2px solid var(--search-color, #49b1f5);
-  border-radius: 40px;
-  background: var(--search-bg);
-  color: var(--search-input-color);
-  -webkit-appearance: none;
-}
-
-#local-search .search-dialog .search-wrap {
-  @apply hidden;
-}
-
-#local-search .search-dialog .local-search-hit-item {
-  @apply ml-6 pl-[3px];
-  line-height: 1.8;
-}
-
-#local-search .search-dialog .local-search-hit-item::marker {
-  color: var(--search-color, #49b1f5);
-  font-weight: bold;
-  font-style: italic;
-}
-
-#local-search .search-dialog .local-search-hit-item a {
-  color: var(--search-a-color);
-}
-
-#local-search .search-dialog .local-search-hit-item a:hover {
-  color: var(--search-color, #49b1f5);
-}
-
-#local-search .search-dialog .local-search-hit-item .search-result-title {
-  @apply font-semibold;
-}
-
-#local-search .search-dialog .local-search-hit-item .search-result {
-  @apply m-0 mb-2 break-all;
-  font-size: 0.9em;
-}
-
-#local-search .search-dialog .search-result-list {
-  @apply -mx-5 px-[22px] m-0;
-  overflow-y: overlay;
-  max-height: calc(80vh - 180px);
+/* 主容器 */
+#pagefind-container .pagefind-ui {
+  --pagefind-ui-scale: 1;
+  --pagefind-ui-primary: var(--search-color, #49b1f5);
+  --pagefind-ui-text: var(--font-color, #1a1a1a);
+  --pagefind-ui-background: transparent;
+  --pagefind-ui-border: var(--hr-border, #d0d0d0);
+  --pagefind-ui-tag: var(--card-bg, #ffffff);
+  --pagefind-ui-border-width: 2px;
+  --pagefind-ui-border-radius: 50px;
+  --pagefind-ui-image-border-radius: 8px;
+  --pagefind-ui-image-box-ratio: 3 / 2;
+  --pagefind-ui-font: inherit;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(90vh - 120px);
 }
 
 @media screen and (max-width: 768px) {
-  #local-search .search-dialog .search-result-list {
-    max-height: calc(var(--search-height) - 190px) !important;
+  #pagefind-container .pagefind-ui {
+    max-height: calc(100vh - 100px);
   }
 }
 
+/* 搜索表单 */
+#pagefind-container .pagefind-ui__form {
+  flex-shrink: 0;
+  margin-bottom: 20px;
+}
+
+/* 搜索输入框 - 修复图标重叠问题 */
+#pagefind-container .pagefind-ui__search-input {
+  background: var(--search-bg, #fff) !important;
+  color: var(--search-input-color, #1a1a1a) !important;
+  border: 2px solid var(--search-color, #49b1f5) !important;
+  border-radius: 50px !important;
+  padding: 14px 50px 14px 20px !important;  /* 右侧留出清除按钮空间，左侧留出图标空间 */
+  font-size: 15px !important;
+  width: 100% !important;
+  -webkit-appearance: none !important;
+  outline: none !important;
+  transition: box-shadow 0.2s ease !important;
+}
+
+#pagefind-container .pagefind-ui__search-input:focus {
+  box-shadow: 0 0 0 4px rgba(73, 177, 245, 0.15) !important;
+}
+
+#pagefind-container .pagefind-ui__search-input::placeholder {
+  color: var(--font-color, #999) !important;
+  opacity: 0.6 !important;
+  font-size: 15px !important;
+}
+
+/* 彻底隐藏 Pagefind 默认搜索图标 */
+#pagefind-container .pagefind-ui__search-inputs > :first-child,
+#pagefind-container .pagefind-ui__search-inputs > div:first-of-type,
+#pagefind-container .pagefind-ui__search-inputs button:not(.pagefind-ui__search-clear),
+#pagefind-container .pagefind-ui__search-inputs [data-pficon],
+#pagefind-container .pagefind-ui__search-inputs img,
+#pagefind-container .pagefind-ui__form > div:first-child > :first-child,
+#pagefind-container .pagefind-ui__search-inputs svg,
+#pagefind-container .pagefind-ui__search-inputs .pagefind-ui__search-icon {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  pointer-events: none !important;
+}
+
+/* 清除按钮 */
+#pagefind-container .pagefind-ui__search-clear {
+  right: 18px !important;
+  color: var(--search-color, #49b1f5) !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+}
+
+/* 搜索结果区域 - 带滚动条 */
+#pagefind-container .pagefind-ui__drawer {
+  flex: 1;
+  overflow-y: auto !important;
+  max-height: calc(90vh - 200px) !important;
+  padding-right: 12px !important;
+  margin-right: -4px !important;
+}
+
+@media screen and (max-width: 768px) {
+  #pagefind-container .pagefind-ui__drawer {
+    max-height: calc(100vh - 160px) !important;
+    padding-right: 8px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* 移动端搜索框 - 16px防止iOS缩放 */
+  #pagefind-container .pagefind-ui__search-input {
+    font-size: 16px !important;
+    padding: 12px 45px 12px 16px !important;
+  }
+  
+  #pagefind-container .pagefind-ui__search-input::placeholder {
+    font-size: 16px !important;
+  }
+  
+  /* 移动端清除按钮 */
+  #pagefind-container .pagefind-ui__search-clear {
+    right: 14px !important;
+    padding: 8px !important;
+  }
+  
+  /* 移动端结果标题 */
+  #pagefind-container .pagefind-ui__result-link {
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    padding: 2px 0 !important;
+  }
+  
+  /* 移动端结果摘要 */
+  #pagefind-container .pagefind-ui__result-excerpt {
+    font-size: 14px !important;
+    line-height: 1.7 !important;
+  }
+  
+  /* 移动端消息提示 */
+  #pagefind-container .pagefind-ui__message {
+    font-size: 14px !important;
+    padding: 6px 0 !important;
+  }
+  
+  /* 移动端结果项间距 */
+  #pagefind-container .pagefind-ui__result {
+    padding: 14px 0 !important;
+  }
+  
+  /* 移动端加载按钮 */
+  #pagefind-container .pagefind-ui__button {
+    padding: 14px 28px !important;
+    font-size: 15px !important;
+    min-height: 48px;
+  }
+  
+  /* 移动端子结果 */
+  #pagefind-container .pagefind-ui__result-nested {
+    margin-top: 10px !important;
+    padding-left: 16px !important;
+  }
+  
+  #pagefind-container .pagefind-ui__result-nested .pagefind-ui__result-link {
+    font-size: 14px !important;
+  }
+}
+
+/* 自定义滚动条样式 */
+#pagefind-container .pagefind-ui__drawer::-webkit-scrollbar {
+  width: 8px;
+}
+
+#pagefind-container .pagefind-ui__drawer::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+
+#pagefind-container .pagefind-ui__drawer::-webkit-scrollbar-thumb {
+  background: var(--hr-border, #ccc);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+#pagefind-container .pagefind-ui__drawer::-webkit-scrollbar-thumb:hover {
+  background: var(--search-color, #49b1f5);
+}
+
+/* Firefox 滚动条 */
+#pagefind-container .pagefind-ui__drawer {
+  scrollbar-width: thin;
+  scrollbar-color: var(--hr-border, #ccc) transparent;
+}
+
+/* 消息提示 - "找到x条" */
+#pagefind-container .pagefind-ui__message {
+  color: var(--font-color, #1a1a1a) !important;
+  padding: 8px 0 !important;  /* 进一步减小间距 */
+  text-align: center !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  border-bottom: none !important;  /* 移除底部分割线 */
+  margin-bottom: 4px !important;
+}
+
+/* 结果列表 */
+#pagefind-container .pagefind-ui__results {
+  padding: 0 0 8px !important;  /* 移除顶部间距 */
+  border-top: 1px dashed var(--hr-border, #ddd);  /* 用虚线分隔 */
+}
+
+/* 单个结果项 - 增大间距 */
+#pagefind-container .pagefind-ui__result {
+  padding: 20px 0 !important;
+  margin-bottom: 4px !important;
+  border-bottom: 1px dashed var(--hr-border, #ddd) !important;
+  list-style: none !important;
+}
+
+#pagefind-container .pagefind-ui__result:last-child {
+  border-bottom: none !important;
+}
+
+/* 结果链接 */
+#pagefind-container .pagefind-ui__result-link {
+  color: var(--search-a-color, #1a1a1a) !important;
+  font-weight: 600 !important;
+  font-size: 17px !important;
+  text-decoration: none !important;
+  line-height: 1.5 !important;
+  display: block !important;
+  margin-bottom: 10px !important;
+  transition: color 0.2s ease !important;
+}
+
+#pagefind-container .pagefind-ui__result-link:hover {
+  color: var(--search-color, #49b1f5) !important;
+}
+
+/* 结果摘要 */
+#pagefind-container .pagefind-ui__result-excerpt {
+  color: var(--font-color, #4c4948) !important;
+  font-size: 14px !important;
+  line-height: 1.75 !important;
+  font-weight: 400 !important;
+}
+
+#pagefind-container .pagefind-ui__result-excerpt mark {
+  color: #f47466 !important;
+  background: transparent !important;
+  font-weight: 600 !important;
+  padding: 0 2px !important;
+}
+
+/* Load more 按钮 */
+#pagefind-container .pagefind-ui__button {
+  background: var(--search-bg, #f5f5f5) !important;
+  color: var(--font-color, #1a1a1a) !important;
+  border: 2px solid var(--hr-border, #d0d0d0) !important;
+  border-radius: 25px !important;
+  padding: 12px 28px !important;
+  margin: 24px auto 8px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease-in-out !important;
+  display: block !important;
+}
+
+#pagefind-container .pagefind-ui__button:hover {
+  background: var(--search-color, #49b1f5) !important;
+  color: white !important;
+  border-color: var(--search-color, #49b1f5) !important;
+  transform: translateY(-1px);
+}
+
+/* 子结果 */
+#pagefind-container .pagefind-ui__result-nested {
+  margin-top: 14px !important;
+  padding-left: 20px !important;
+  border-left: 2px solid var(--hr-border, #ddd) !important;
+}
+
+#pagefind-container .pagefind-ui__result-nested .pagefind-ui__result-link {
+  font-size: 15px !important;
+  font-weight: 500 !important;
+}
+
+#pagefind-container .pagefind-ui__result-nested .pagefind-ui__result-excerpt {
+  font-size: 13px !important;
+}
+
+/* 过滤器面板（如果有） */
+#pagefind-container .pagefind-ui__filter-panel {
+  margin-bottom: 16px !important;
+  padding-bottom: 16px !important;
+  border-bottom: 1px solid var(--hr-border, #ddd) !important;
+}
+
 /* =================================================================
-   Search Keyword Highlight
+   Dark Mode - Enhanced Contrast
    ================================================================= */
 
-.search-keyword {
-  @apply bg-transparent font-semibold;
-  color: #f47466;
+html.dark #pagefind-container .pagefind-ui {
+  --pagefind-ui-text: var(--font-color, #e0e0e0);
+  --pagefind-ui-border: var(--hr-border, #555);
+}
+
+html.dark #pagefind-container .pagefind-ui__search-input {
+  background: var(--search-bg, #2a2a2a) !important;
+  color: var(--search-input-color, #e0e0e0) !important;
+}
+
+html.dark #pagefind-container .pagefind-ui__search-input::placeholder {
+  color: #888 !important;
+}
+
+html.dark #pagefind-container .pagefind-ui__result-link {
+  color: #e8e8e8 !important;
+}
+
+html.dark #pagefind-container .pagefind-ui__result-link:hover {
+  color: var(--search-color, #49b1f5) !important;
+}
+
+html.dark #pagefind-container .pagefind-ui__result-excerpt {
+  color: #c0c0c0 !important;
+  opacity: 1 !important;
+}
+
+html.dark #pagefind-container .pagefind-ui__message {
+  color: #c0c0c0 !important;
+}
+
+html.dark #pagefind-container .pagefind-ui__drawer::-webkit-scrollbar-thumb {
+  background: #555;
+}
+
+html.dark #pagefind-container .pagefind-ui__drawer::-webkit-scrollbar-thumb:hover {
+  background: var(--search-color, #49b1f5);
 }

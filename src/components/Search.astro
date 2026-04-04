@@ -1,0 +1,159 @@
+---
+import type { Language } from '@src/types';
+import { useTranslations } from '@src/utils';
+
+interface Props {
+  lang: Language;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div id="search" class="hidden">
+  <div id="search-mask"></div>
+  <div id="local-search" class="search-dialog">
+    <div class="search-nav">
+      <span class="search-dialog-title">{t('search.title')}</span>
+      <span class="search-close-button">
+        <i class="fas fa-times"></i>
+      </span>
+    </div>
+    <hr />
+    <div id="pagefind-container"></div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+<script>
+  // Pagefind 实例
+  let pagefindUI: any = null;
+  let pagefindLoaded = false;
+  let isInitializing = false;
+  
+  async function loadPagefindScript(): Promise<void> {
+    if (pagefindLoaded) return Promise.resolve();
+    
+    return new Promise((resolve, reject) => {
+      if (document.querySelector('script[data-pagefind-ui]')) {
+        resolve();
+        return;
+      }
+      
+      const script = document.createElement('script');
+      script.src = '/pagefind/pagefind-ui.js';
+      script.type = 'text/javascript';
+      script.setAttribute('data-pagefind-ui', 'true');
+      script.onload = () => {
+        pagefindLoaded = true;
+        resolve();
+      };
+      script.onerror = () => reject(new Error('Failed to load Pagefind UI'));
+      document.head.appendChild(script);
+    });
+  }
+  
+  async function initPagefind() {
+    if (pagefindUI || isInitializing) return;
+    isInitializing = true;
+    
+    try {
+      await loadPagefindScript();
+      
+      const PagefindUIConstructor = (window as any).PagefindUI;
+      
+      if (!PagefindUIConstructor) {
+        throw new Error('PagefindUI not found on window object');
+      }
+      
+      // 销毁旧的实例（如果存在）
+      const container = document.getElementById('pagefind-container');
+      if (container) {
+        container.innerHTML = '';
+      }
+      
+      // 创建新的 PagefindUI 实例
+      pagefindUI = new PagefindUIConstructor({
+        element: '#pagefind-container',
+        showImages: false,
+        excerptLength: 15,
+        showSubResults: true,
+        resetStyles: false,  // 使用我们自己的样式
+        bundlePath: '/pagefind/',
+        translations: {
+          placeholder: '搜索文章...',
+          clear_search: '清除',
+          load_more: '加载更多结果',
+          search_label: '搜索本站',
+          filters_label: '过滤器',
+          zero_results: '未找到相关结果',
+          many_results: '找到 [COUNT] 条结果',
+          one_result: '找到 [COUNT] 条结果',
+          alt_search: '未找到相关结果，显示 [DIFFERENT_TERM] 的结果',
+          search_suggestion: '未找到相关结果，尝试以下搜索：',
+          searching: '搜索中...'
+        }
+      });
+      
+      // 等待 Pagefind 初始化完成，然后聚焦到输入框
+      setTimeout(() => {
+        const pagefindInput = document.querySelector('.pagefind-ui__search-input') as HTMLInputElement;
+        if (pagefindInput) {
+          pagefindInput.focus();
+        }
+      }, 100);
+      
+    } catch (error) {
+      console.error('Failed to load Pagefind:', error);
+      const container = document.getElementById('pagefind-container');
+      if (container) {
+        container.innerHTML = '<p style="text-align: center; padding: 40px 20px; color: #666;">搜索功能加载失败，请刷新页面重试</p>';
+      }
+    } finally {
+      isInitializing = false;
+    }
+  }
+  
+  // 打开/关闭搜索弹窗逻辑
+  const searchButton = document.getElementById('search-button');
+  const searchMask = document.getElementById('search-mask');
+  const searchClose = document.querySelector('.search-close-button');
+  const searchContainer = document.getElementById('search');
+  
+  function openSearch() {
+    searchContainer?.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    initPagefind();
+  }
+  
+  function closeSearch() {
+    searchContainer?.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+  
+  searchButton?.addEventListener('click', openSearch);
+  searchMask?.addEventListener('click', closeSearch);
+  searchClose?.addEventListener('click', closeSearch);
+  
+  // ESC 键关闭
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !searchContainer?.classList.contains('hidden')) {
+      closeSearch();
+    }
+  });
+</script>
+
+<style>
+  #search {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+  }
+  #search.hidden {
+    display: none;
+  }
+  
+  #pagefind-container {
+    width: 100%;
+  }
+</style>

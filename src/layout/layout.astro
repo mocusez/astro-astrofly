@@ -11,6 +11,7 @@ import LoadingIndex from './loadings/index.astro';
 import WidgetIndex from './widget/index.astro';
 import AdditionalJs from './additional-js.astro';
 import Rightside from './rightside.astro';
+import Search from '../components/Search.astro';
 
 interface Props {
   lang: Language;
@@ -19,6 +20,9 @@ interface Props {
 }
 const { lang,page,postHeadings } = Astro.props;
 const asideClass = theme.aside.enable && theme.aside.hide ? 'hide-aside' : '';
+
+// 排除分页和归档页面不被 Pagefind 索引
+const excludeFromSearch = page.type === 'archives' || page.type === 'index';
 ---
 <html lang={lang} class={asideClass}>
   <Head lang={lang} page={page}/>
@@ -35,7 +39,7 @@ const asideClass = theme.aside.enable && theme.aside.hide ? 'hide-aside' : '';
     <div id="body-wrap" class={isPost ? 'post' : 'page' + (page.type ? ' type-' + page.type : '')}>
       <HeaderIndex lang={lang} page={page}/>
 
-      <main class='layout flex justify-between pt-5 pb-8 max-[900px]:flex-col' id="content-inner" >
+      <main class='layout flex justify-between pt-5 pb-8 max-[900px]:flex-col' id="content-inner" data-pagefind-ignore={excludeFromSearch ? '' : undefined}>
         <slot />
         <WidgetIndex lang={lang} postHeadings={postHeadings}/>
 
@@ -55,5 +59,6 @@ const asideClass = theme.aside.enable && theme.aside.hide ? 'hide-aside' : '';
     </div>
     <Rightside lang={lang}/>
     <AdditionalJs />
+    <Search lang={lang} />
   </body>
 </html>
