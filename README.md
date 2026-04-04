@@ -11,6 +11,7 @@ Inspire by the [hexo-theme-butterfly](https://github.com/jerryc127/hexo-theme-bu
 
 - **Astro v6** — Built on the latest Astro for fast, static-first performance
 - **Bilingual Support** — Chinese (zh-CN) and English content with language-specific routing
+- **Full-Text Search** — Lightning-fast static search powered by [Pagefind](https://pagefind.app/), with multilingual support and mobile optimization
 - **PWA Support** — Installable as a Progressive Web App with offline access, auto cache versioning on build
 - **Waline Comments** — Integrated [Waline](https://waline.js.org/) comment system with pageview counting and dark mode support
 - **Expressive Code** — Syntax highlighting powered by Shiki, with custom MLIR/LLVM grammar support
