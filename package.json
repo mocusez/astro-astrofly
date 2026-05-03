@@ -12,12 +12,12 @@
     "sync": "tsx cli.ts sync"
   },
   "dependencies": {
-    "@astrojs/check": "0.9.8",
+    "@astrojs/check": "0.9.9",
     "@astrojs/rss": "4.0.18",
     "@astrojs/sitemap": "^3.7.2",
     "@astrojs/tailwind": "^6.0.2",
     "@fortawesome/fontawesome-free": "^6.6.0",
-    "astro": "6.1.2",
+    "astro": "6.2.1",
     "astro-pagefind": "^1.8.6",
     "autoprefixer": "^10.4.27",
     "sharp": "^0.33.5",
