@@ -32,7 +32,7 @@ function listCategories(categories: Category[], options: any = {}): string {
   categories.forEach(category => {
     result += `<li class="category-list-item"><a class="category-list-link" href="/${lang}${category.path}">${category.name}</a>`;
     if (showCount) {
-      result += `<span class="category-list-count">(${category.count})</span>`;
+      result += `<span class="category-list-count">${category.count}</span>`;
     }
     result += `</li>`;
   });
@@ -45,6 +45,6 @@ const list = listCategories(categories);
 ---
 <Layout lang={lang} page={page}>
   <div id="page">
-      <div id="category-lists" set:html={list}/>
+      <div class="category-lists" set:html={list}/>
   </div>
 </Layout>
