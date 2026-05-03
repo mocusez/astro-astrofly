@@ -55,3 +55,11 @@ All commands are run from the root of the project, from a terminal:
 | `npm run newpage`         | Generate new post base on template               |
 | `npm run sync`            | Publish the site by system script                |
 
+## 🌍 Translation
+
+We welcome translation contributions via Weblate!
+
+[![Translation status](https://hosted.weblate.org/widget/astro-astrofly/astro-astrofly/svg-badge.svg)](https://hosted.weblate.org/projects/astro-astrofly/astro-astrofly/)
+
+Visit [Weblate](https://hosted.weblate.org/projects/astro-astrofly/astro-astrofly/) to help translate Astrofly into your language.
+
