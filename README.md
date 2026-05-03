@@ -3,6 +3,8 @@
 
 [![Built with Astro](https://astro.badg.es/v1/built-with-astro.svg)](https://astro.build)
 
+English | [简体中文](./README_zh-CN.md)
+
 Inspire by the [hexo-theme-butterfly](https://github.com/jerryc127/hexo-theme-butterfly) and [HsuBlog](https://github.com/KraHsu/HsuBlog)
 
 ![image-20241226125647006](README.assets/image-20241226125647006.png)
