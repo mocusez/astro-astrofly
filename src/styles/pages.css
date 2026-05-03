@@ -379,28 +379,29 @@
    ================================================================= */
 
 .flink-list {
-  @apply overflow-auto py-5;
+  @apply py-5 grid gap-4;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .flink-list > .flink-list-item {
-  @apply relative float-left overflow-hidden w-[calc(100%/3)] p-[15px];
+  @apply relative overflow-hidden;
   transition: all 0.3s;
 }
 
 @media (max-width: 1024px) {
-  .flink-list > .flink-list-item {
-    @apply w-1/2;
+  .flink-list {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .flink-list > .flink-list-item {
-    @apply w-full;
+  .flink-list {
+    grid-template-columns: 1fr;
   }
 }
 
 .flink-list > .flink-list-item a {
-  @apply block rounded-md;
+  @apply block rounded-xl;
   height: 100%;
   line-height: 1.4;
   box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.1);
@@ -414,11 +415,11 @@
 }
 
 .flink-list > .flink-list-item a > .flink-item-icon {
-  @apply overflow-hidden float-left w-16 h-16 m-4 rounded-full;
+  @apply overflow-hidden flex-shrink-0 float-left w-16 h-16 m-4 rounded-full;
 }
 
 .flink-list > .flink-list-item a > .flink-item-icon img {
-  @apply w-full h-full object-cover;
+  @apply w-full h-full object-cover block;
   transition: all 0.6s;
 }
 
@@ -440,10 +441,6 @@
   -webkit-line-clamp: 2;
 }
 
-.flink-list::after {
-  @apply block clear-both;
-  content: '';
-}
 
 .flink-name {
   @apply text-2xl font-bold py-4;
