@@ -80,7 +80,7 @@ const pageNumbers = generatePageNumbers(page.currentPage, page.lastPage);
       tempPage === page.currentPage ? (
         <span class="page-number current"> {page.currentPage}</span>
         ) : (
-          <a class="page-number" href={`${middle}${tempPage}/#content-inner`}> {tempPage}</a>
+          <a class="page-number" href={`${middle}${tempPage === 1 ? '' : tempPage + '/'}#content-inner`}> {tempPage}</a>
         )
       ) : (
         <span class="space">{tempPage}</span>
