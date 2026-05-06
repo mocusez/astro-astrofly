@@ -17,6 +17,7 @@
     "@astrojs/sitemap": "^3.7.2",
     "@astrojs/tailwind": "^6.0.2",
     "@fortawesome/fontawesome-free": "^6.6.0",
+    "@waline/client": "3.13.0",
     "astro": "6.2.1",
     "astro-pagefind": "^1.8.6",
     "autoprefixer": "^10.4.27",
@@ -30,7 +31,6 @@
     "@expressive-code/plugin-frames": "^0.39.0",
     "@expressive-code/plugin-line-numbers": "^0.39.0",
     "@types/node": "^25.0.3",
-    "@waline/client": "^3.4.2",
     "astro-expressive-code": "^0.39.0",
     "tsx": "^4.21.0"
   }
