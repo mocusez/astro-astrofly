@@ -1,0 +1,14 @@
+[
+    {
+      "class_name": "Test",
+      "class_desc": "Testing",
+      "link_list": [
+        {
+          "name": "Mox's Blog",
+          "link": "https://mocusez.site/en/",
+          "avatar": "https://avatars.githubusercontent.com/u/57286919",
+          "descr": "blog test"
+        }
+      ]
+    }
+  ]

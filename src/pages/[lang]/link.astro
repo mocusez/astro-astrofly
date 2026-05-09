@@ -1,7 +1,24 @@
 ---
 import type { Language } from '@src/types';
 import { theme } from '@src/theme';
-import link from '@content/link.json';
+import { useTranslations } from '@src/utils';
+import linkZhCN from '@content/link.zh-CN.json';
+import linkEn from '@content/link.en.json';
+
+const linkData: Record<Language, typeof linkZhCN> = {
+  'zh-CN': linkZhCN,
+  'en': linkEn,
+};
+
+export function getStaticPaths () {
+ return [
+    {params: {lang: 'en'}},
+    {params: {lang: 'zh-CN'}},
+  ];
+}
+const { lang } = Astro.params as { lang: Language };
+const t = useTranslations(lang);
+const link = linkData[lang];
 
 let pageContent = '';
 if (link) {
@@ -31,17 +48,10 @@ if (link) {
 }
 import Layout from '@src/layout/layout.astro';
 const page = {
-  "title": "友链&私人收藏",
+  "title": t('page.link'),
   "type": "link",
   "comments": false
 }
-export function getStaticPaths () {
- return [
-    {params: {lang: 'en'}},
-    {params: {lang: 'zh-CN'}},
-  ];
-}
-const { lang } = Astro.params as { lang: Language };
 ---
 <Layout lang={lang} page={page}>
     <div id="page" class={''}>

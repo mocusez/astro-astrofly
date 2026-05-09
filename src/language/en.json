@@ -13,7 +13,8 @@
         "tag": "Tag",
         "category": "Category",
         "archives": "Archives",
-        "board": "Message Board"
+        "board": "Message Board",
+        "link": "Links & Bookmarks"
     },
     "card_post_count": "comments",
     "no_title": "Untitled",
