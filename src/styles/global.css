@@ -490,3 +490,28 @@
   0% { transform: translateX(200px); }
   100% { transform: translateX(0); }
 }
+
+/* =================================================================
+   Language-Specific Font Optimization
+   Outside @layer so Tailwind's optimizer doesn't strip these
+   ================================================================= */
+
+/* Chinese pages: explicitly inherit Tailwind preflight's font-family on html */
+html[lang="zh-CN"] body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', 'Lato', 'Roboto', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* English pages: optimized font stack + tighter line-height for Latin prose */
+html[lang="en"] body {
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', 'Arial', sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+/* English headings: slightly tighter margins than the default Chinese-optimized ones */
+html[lang="en"] h1 { margin: 20px 0 12px; }
+html[lang="en"] h2 { margin: 18px 0 10px; }
+html[lang="en"] h3 { margin: 16px 0 8px; }
+html[lang="en"] h4 { margin: 14px 0 6px; }
+html[lang="en"] h5 { margin: 12px 0 4px; }
+html[lang="en"] h6 { margin: 10px 0 2px; }

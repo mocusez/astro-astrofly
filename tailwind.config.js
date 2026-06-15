@@ -60,8 +60,11 @@ export default {
       },
       // Font families
       fontFamily: {
+        // Chinese-optimized stack: SF / system fonts → CJK fonts → generic
         'sans': ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', 'Lato', 'Roboto', 'PingFang SC', 'Microsoft YaHei', 'sans-serif'],
-        'code': ['consolas', 'Menlo', 'PingFang SC', 'Microsoft YaHei', 'sans-serif'],
+        // English-optimized stack: modern geometric sans-serifs for headings/body
+        'sans-en': ['Inter', 'SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        'code': ['JetBrains Mono', 'Fira Code', 'Consolas', 'Menlo', 'PingFang SC', 'Microsoft YaHei', 'monospace'],
       },
       // Font sizes
       fontSize: {
