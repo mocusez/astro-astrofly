@@ -3,6 +3,7 @@ import sitemap from '@astrojs/sitemap';
 import expressiveCode from 'astro-expressive-code';
 import tailwind from '@astrojs/tailwind';
 import pagefind from 'astro-pagefind';
+import { unified } from '@astrojs/markdown-remark';
 import { readFileSync, writeFileSync } from 'fs';
 import { fileURLToPath, URL } from 'url';
 
@@ -28,6 +29,9 @@ function pwaAutoVersion() {
 export default defineConfig({
   site: 'https://mocusez.site',
   integrations: [sitemap(), expressiveCode(), tailwind(), pagefind(), pwaAutoVersion()],
+  markdown: {
+    processor: unified({}),
+  },
   vite: {
     build: {
       rollupOptions: {
