@@ -28,7 +28,9 @@ export default defineEcConfig({
       C: 'c',
       CPP: 'cpp',
       'C++': 'cpp',
+      SQL: 'sql',
       assembly: 'asm',
+      undefined: 'txt',
     }
   },
   themes: ['light-plus','dark-plus'],

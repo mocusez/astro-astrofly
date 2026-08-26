@@ -28,13 +28,14 @@ function pwaAutoVersion() {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://mocusez.site',
+  compressHTML: true,
   integrations: [sitemap(), expressiveCode(), tailwind(), pagefind(), pwaAutoVersion()],
   markdown: {
     processor: unified({}),
   },
   vite: {
     build: {
-      rollupOptions: {
+      rolldownOptions: {
         external: ['@pagefind/default-ui']
       }
     }

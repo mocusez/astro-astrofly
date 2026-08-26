@@ -2,6 +2,9 @@
   "name": "blog_butterfly",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -12,27 +15,45 @@
     "sync": "tsx cli.ts sync"
   },
   "dependencies": {
-    "@astrojs/check": "0.9.9",
-    "@astrojs/markdown-remark": "^7.2.0",
-    "@astrojs/rss": "4.0.18",
+    "@astrojs/check": "0.9.10",
+    "@astrojs/markdown-remark": "^7.2.4",
+    "@astrojs/rss": "4.0.19",
     "@astrojs/sitemap": "^3.7.3",
     "@astrojs/tailwind": "^6.0.2",
     "@fortawesome/fontawesome-free": "^6.6.0",
     "@waline/client": "3.13.0",
-    "astro": "6.4.7",
-    "astro-pagefind": "^1.8.6",
+    "astro": "7.2.7",
+    "astro-pagefind": "^2.0.1",
     "autoprefixer": "^10.4.27",
-    "sharp": "^0.33.5",
+    "sharp": "^0.35.3",
     "tailwindcss": "^3.4.19",
     "typed.js": "^3.0.0",
     "typescript": "^5.6.3"
   },
   "devDependencies": {
-    "@expressive-code/plugin-collapsible-sections": "^0.43.1",
-    "@expressive-code/plugin-frames": "^0.43.1",
-    "@expressive-code/plugin-line-numbers": "^0.43.1",
-    "@types/node": "^25.0.3",
-    "astro-expressive-code": "^0.43.1",
+    "@expressive-code/plugin-collapsible-sections": "^0.44.1",
+    "@expressive-code/plugin-frames": "^0.44.1",
+    "@expressive-code/plugin-line-numbers": "^0.44.1",
+    "@types/node": "^24.13.3",
+    "astro-expressive-code": "^0.44.1",
     "tsx": "^4.21.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "ajv@8.17.1": "8.18.0",
+      "brace-expansion@2.0.3": "2.1.4",
+      "defu@6.1.4": "6.1.5",
+      "fast-uri@3.1.0": "3.1.5",
+      "fast-xml-builder@1.1.4": "1.1.7",
+      "fast-xml-parser@5.5.9": "5.7.0",
+      "picomatch@2.3.1": "2.3.2",
+      "picomatch@4.0.3": "4.0.7",
+      "picomatch@4.0.4": "4.0.7",
+      "postcss@8.5.6": "8.5.26",
+      "postcss@8.5.14": "8.5.26",
+      "svgo@4.0.1": "4.0.2",
+      "yaml@2.7.1": "2.8.3",
+      "yaml@2.8.2": "2.8.3"
+    }
   }
 }
