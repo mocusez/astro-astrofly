@@ -998,11 +998,18 @@
     font-family: Monaco, 'Ubuntu Mono', monospace;
   }
 
+  /* Tailwind preflight resets ol/ul to list-style:none, so restore markers */
+  #article-container ol,
+  #article-container ul {
+    @apply pl-5 mb-4;
+    list-style: revert;
+  }
+
   #article-container ol ol,
   #article-container ol ul,
   #article-container ul ol,
   #article-container ul ul {
-    @apply pl-5;
+    @apply pl-5 mb-0;
   }
 
   #article-container ol li,
